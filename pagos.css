@@ -283,7 +283,7 @@ body {
 .tabla {
     width: 92%;
     max-width: 1280px;
-    margin: 40px auto;
+    margin: 15px auto;
     background: transparent;
     border: 1px solid #293548;
     border-radius: 18px;
@@ -1554,7 +1554,7 @@ background-color: rgba(255,255,255,0.1);}
   /* ====== TABLA / LISTA ====== */
   .tabla {
     order: 2 !important;
-    padding: 5px !important;
+    padding: 2px !important;
     border-radius: 14px !important;
     max-height: none !important;
     height: auto !important;
