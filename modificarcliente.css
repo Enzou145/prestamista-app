@@ -1,0 +1,129 @@
+:root {
+    --bg-body: #020617;
+    --bg-gradient: linear-gradient(135deg, #020617, #0f172a);
+
+    --card-bg: #0b1220;
+    --card-border: rgba(255,255,255,0.05);
+    --shadow: 0 0 40px rgba(0, 100, 255, 0.1);
+
+    --text-main: #ffffff;
+    --text-secondary: #6b7280;
+
+    --input-bg: #1e293b;
+
+    --btn-primary: linear-gradient(90deg, #3b82f6, #60a5fa);
+    --btn-secondary: transparent;
+
+    --btn-text: #ffffff;
+}
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter";
+}
+
+/* BODY */
+body {
+    background: var(--bg-gradient);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* CONTENEDOR */
+.tabla {
+    background: var(--card-bg);
+    width: 600px;
+    padding: 35px;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow);
+}
+
+/* TITULO */
+.titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.titulo h1 {
+    color: var(--text-main);
+    font-size: 22px;
+}
+
+.titulo p {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+/* X cerrar */
+.cerrar {
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* FILAS (2 columnas) */
+.fila {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+/* CAMPOS */
+.campo {
+    flex: 1;
+}
+
+/* LABEL */
+label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* INPUTS */
+input, select {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    background: var(--input-bg);
+    color: var(--text-main);
+    outline: none;
+}
+
+/* BOTONES */
+.botones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.cancelar {
+    background: transparent;
+    color: var(--text-secondary);
+    border: none;
+    cursor: pointer;
+}
+
+.guardar {
+    background: var(--btn-primary);
+    color: var(--btn-text);
+    border: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}

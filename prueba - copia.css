@@ -1,0 +1,444 @@
+body{
+padding: 0;
+margin: 0;
+text-decoration: none;
+list-style: none;
+}
+
+header{
+background-color: rgb(32, 32, 32);
+height: 100px;
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: space-between;}
+
+header .Logo{
+display: flex;
+margin-left: 100px;
+margin-top: 50px;
+z-index: 10;}
+
+header .menu nav ul{
+display: flex;
+margin-left: -700px;
+gap: 40px;
+list-style: none;
+
+}
+
+header .menu nav ul li a{
+text-decoration: none;
+left: 10px;
+color: aliceblue;
+font-size: 15px;
+font-family: michroma;
+transition: all 0.3s ease;
+}
+
+header .menu nav ul li a:hover{
+color: rgb(214, 0, 0);
+}
+
+header .menu nav ul li .Rojo{
+text-decoration: none;
+left: 100px;
+color: rgb(236, 9, 9);
+}
+
+#Hero{
+display: flex;
+justify-content: center;
+height: 700px;
+background-image:linear-gradient(0deg, rgb(0, 0, 0), rgba(70, 70, 70, 0.781)) ,url("/IMAGENES/ski10-74bba689.jpeg");
+background-repeat: no-repeat;
+background-size: cover;
+background-position:center center;}
+
+
+.textoo h1{
+margin-top: 160px;
+display: flex;
+justify-content: center;
+color: aliceblue;
+font-size: 55px;
+font-family: michroma;}
+
+.textoo{
+margin-top: 70px;}
+
+.textoo p{
+display: flex;
+justify-content: center;
+width: 30%;
+margin-top: 90px;
+margin-left: 650px;
+color: aliceblue;
+font-family:'Arial Narrow', Arial, sans-serif;
+font-size: 17px;}
+
+.botonreserva button{
+background-color: aliceblue;
+margin-top: 90px;
+margin-left: 840px;
+font-size: 15px;
+padding: 10px 20px;
+font-weight: lighter;
+font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+box-shadow: 1px 1px 5px rgb(82, 12, 0);
+border: rgb(255, 255, 255);
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.botonreserva button:hover{
+background-color: transparent;
+color: white;
+border: 1px solid white;}
+
+.conteiner{
+background-color: black;}
+
+.negrito{
+height: 170px;
+background-color: rgb(0, 0, 0);}
+
+.segundasection{
+background-color: rgb(0, 0, 0);}
+
+.rutas{
+display: flex;
+justify-content: center;
+}
+
+.izquierda{
+background-color: black;
+display: flex;}
+
+.derechaaa{
+background-color: rgb(29, 29, 29);
+width: 55%;
+}
+
+.reserva{
+margin-top: 20px;
+display: flex;
+align-items: center;
+margin-left: 200px;
+margin-bottom: 45px;
+/*border-bottom: 2px solid rgb(216, 216, 216);
+padding-bottom: 60px;*/
+}
+
+.tiporutas{
+width: 350px;
+color: white;
+font-family: Montserrat;
+font-size: 10px;
+margin-top: 0;
+font-weight: 400;}
+
+.tiporutas .titulo{
+margin-top: 20px;
+margin-bottom: 0;
+font-size: 45px;
+font-weight: 400;
+color: rgb(255, 255, 255);}
+
+.tiporutas h2{
+    font-size: 27px;
+    margin-bottom: 10px;
+    font-weight: 400;
+}
+
+.tiporutas h3{
+    font-size: 17px;
+    margin: 8px 0;
+    font-weight: 300;
+}
+
+.reservarahora button{
+background-color: rgb(233, 14, 7);
+color: rgb(26, 0, 0);
+margin-left: 300px;
+margin-top: 0;
+font-size: 15px;
+padding: 8px 18px;
+font-weight: lighter;
+font-family: 'Franklin Gothic', 'Arial Narrow', Arial, sans-serif;
+border: 3px solid rgb(233, 14, 7);
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+.reservarahora button:hover{
+background-color: transparent;
+color: white;
+border: 1px solid rgb(255, 0, 0);}
+/*-----------------------------------------*/
+
+#inviernoosection{
+padding-bottom: 500px;}
+
+
+.invierno h1{
+font-family: montserrat;
+font-size: 60px;
+display: flex;
+justify-content: center;
+margin-top: 150px;}
+
+.invierno p{
+font-family: montserrat;
+font-size: 17px;
+width: 550px;
+margin: 50px auto;
+font-weight: 400;}
+
+.cuadradoss{
+margin-top: 100px;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 200px;}
+
+.cuadrados{
+margin: 0;
+padding: 0;
+gap: 20px;}
+
+.cuadrado h1{
+color: rgb(0, 0, 0);
+font-size: 25px;
+font-family: montserrat;
+font-weight: 500;
+margin-top: 10px;
+font-weight: 400;
+}
+
+.cuadrado .imagenn1{
+height: 80px;
+width: 70px;
+margin-left: 20px;
+}
+
+.cuadrado .imagenn2{
+height: 150px;
+width: 70px;
+margin-left: 20px;
+}
+
+.cuadrado .imagenn3{
+height: 200px;
+width: 100px;
+margin-left: 25px;
+}
+
+.cuadrado .imagenn4{
+height: 150px;
+width: 70px;
+margin-left: 20px;
+}
+
+.botonmasinfo{
+display: flex;
+justify-content: center;
+margin-top: 150px;}
+
+.botonmasinfo button{
+background-color: rgb(255, 255, 255);
+font-size: 15px;
+padding: 16px 15px;
+font-weight: lighter;
+font-family: "montserrat", sans-serif;
+color: black;
+font-weight: 400;
+cursor: pointer;
+transition: all 0.3s ease; 
+}
+
+.botonmasinfo button:hover{
+background-color: black;
+color: white;}
+
+
+/*--------------------*/
+#section3{
+background-image:linear-gradient(0deg,  rgba(255, 255, 255, 0.781), rgb(207, 207, 207)) ,url(/IMAGENES/194cf-monte2b8.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center center;
+background-color: rgb(66, 35, 35);
+width: 100%;
+height: 900px;}
+
+.rectangulo{
+display: flex;
+justify-content: center;
+margin-top: -100px;}
+
+.rectangulo .ladoizq{
+margin-top: -200px;
+background-color: rgb(29, 29, 29);
+width: 50%;}
+
+.rectangulo .ladoizq h1{
+color: white;
+font-family: montserrat;
+font-size: 60px;
+margin-top: 80px;
+display: flex;
+justify-content: center;}
+
+.rectangulo .ladoizq p{
+color: white;
+font-family: montserrat;
+font-size: 16px;
+width: 50%;
+margin-top: 100px;
+margin: 0 auto;
+line-height: 30px;
+font-weight: 350;
+}
+
+.rectangulo .ladoizq p2{
+display: flex;
+justify-content: center;
+color: white;
+font-family: montserrat;
+font-size: 16px;
+margin-top: 60px;
+line-height: 30px;
+font-weight: 350;
+}
+
+.rectangulo .ladoder{
+    margin-top: -200px;
+}
+
+.puntos{
+display: flex;
+gap: 10px;
+justify-content: center;
+align-items: center;
+margin-top: 30px;}
+
+.puntos li{
+background-color: rgb(219, 16, 16);
+width: 8px;
+height: 8px;
+border-radius: 50%;}
+
+.puntos li:nth-child(1) {
+  background-color: rgb(219, 16, 16);
+}
+
+.puntos li:nth-child(2) {
+  background-color: transparent;
+  border: 3px solid rgb(219, 16, 16);
+}
+
+.puntos li:nth-child(3) {
+  background-color: rgb(219, 16, 16);
+}
+
+#section3 .noticiasolimpo{
+margin-top: 150px;}
+
+.noticiasolimpo h1{
+display: flex;
+justify-content: center;
+font-family: montserrat;
+font-size: 60px;
+margin: 50px 0;}
+
+.noticiasolimpo .parrafo {
+  max-width: 500px; /* o el ancho que quieras */
+  margin: 0 auto;    /* centra horizontalmente */
+  text-align: center;
+  line-height: 1.7;  /* para separar líneas, opcional */
+  font-family: montserrat;
+  font-weight: 350;
+}
+
+/*----------------------*/
+#section4blanca {
+height: 55vh;
+}
+
+
+#section4blanca .contenedor {
+  display: grid;
+  grid-template-columns: repeat(3, 310px);
+  justify-content: center;
+  gap: 25px; /* Cambiá el valor según cuánto querés separarlas */
+}
+
+
+.carta img{
+cursor: pointer;
+}
+
+.carta{
+margin-top: -140px;
+background-color: rgb(29, 29, 29);
+box-shadow: 2px 4px 4px rgb(190, 190, 190);
+width: 310px;
+height: 380px;
+}
+
+.carta-info h1{
+font-family: montserrat;
+font-size: 18px;
+font-weight: 600;
+color: white;
+border-bottom: 1px solid rgb(58, 58, 58);
+padding-bottom: 15px;
+}
+
+.detalles{
+display: flex;}
+
+.detalles .titu h1{
+color: rgb(255, 255, 255);
+margin-left: 10px;
+margin-top: 90%;
+font-weight: 350;
+font-size: 15px;}
+
+.detalles .ojito img{
+margin-left:  15px;
+margin-top: 40%;}
+
+.detalles .ojito img:hover{
+color: aqua;}
+
+#section4blanca .botonmasinfo button{
+display: flex;
+justify-content: center;
+margin-top: -40px!important;
+background-color: rgb(255, 255, 255);
+font-size: 15px;
+padding: 10px 28px;
+border: 1px solid black;
+font-family: "montserrat", sans-serif;
+color: black;
+font-weight: 400;
+cursor: pointer;
+transition: all 0.3s ease; 
+}
+
+#section4blanca button:hover{
+background-color: black;
+color: white;}
+
+/*-------------*/
+.footer-negro{
+background-color: rgb(32, 32, 32);
+height: 57vh;}
+
+
+
+
+
+  

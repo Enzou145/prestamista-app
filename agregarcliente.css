@@ -1,0 +1,205 @@
+body{
+font-family: "Montserrat";}
+
+:root {
+    /* 🌙 MODO OSCURO (default) */
+    --bg-body: #020617;
+    --bg-gradient: linear-gradient(135deg, #020617, #0f172a);
+
+    --card-bg: #020617;
+    --card-border: rgba(255,255,255,0.05);
+    --shadow: 0 0 40px rgba(0, 100, 255, 0.1);
+
+    --text-main: #ffffff;
+    --text-secondary: #6b7280;
+
+    --input-bg: #1e293b;
+    --input-placeholder: #64748b;
+
+    --btn-primary: #3b82f6;
+    --btn-secondary: #1e293b;
+
+    --btn-text: #ffffff;
+    --btn-secondary-text: #9ca3af;
+}
+
+/* ☀️ MODO CLARO */
+.light {
+    --bg-body: #f1f5f9;
+    --bg-gradient: linear-gradient(135deg, #e2e8f0, #f8fafc);
+
+    --card-bg: #ffffff;
+    --card-border: rgba(0,0,0,0.05);
+    --shadow: 0 10px 30px rgba(0,0,0,0.1);
+
+    --text-main: #0f172a;
+    --text-secondary: #6b7280;
+
+    --input-bg: #f1f5f9;
+    --input-placeholder: #94a3b8;
+
+    --btn-primary: linear-gradient(90deg, #3b82f6, #60a5fa);
+    --btn-secondary: #e2e8f0;
+
+    --btn-text: #ffffff;
+    --btn-secondary-text: #334155;
+}
+
+
+
+/*--------------------------------------------------------------------*/
+
+
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter";
+}
+
+
+/* FONDO */
+body {
+    background: var(--bg-gradient);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* CONTENEDOR */
+.tabla {
+    background: var(--card-bg);
+    width: 480px;
+    padding: 35px;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow);
+}
+
+/* TITULO */
+.titulo {
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 15px;
+    margin-bottom: 40px;
+}
+
+.titulo h1 {
+    color: var(--text-main);
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.titulo p {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+/* LABEL */
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+/* INPUTS */
+input, select {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    background: var(--input-bg);
+    color: var(--text-main);
+    outline: none;
+}
+
+/* PLACEHOLDER */
+input::placeholder {
+    color: var(--input-placeholder);
+}
+
+/* FILA */
+.nombre-apellido {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.nombre, .apellido {
+    flex: 1;
+}
+
+/* ESPACIADO */
+.telefono,
+.email,
+.campo {
+    margin-top: 30px;
+}
+
+/* BOTONES */
+.botones {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 60px;
+}
+
+.botones button {
+    flex: 1;
+    padding: 14px;
+    font-size: 15px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* CANCELAR */
+.botones button:first-child {
+    background: var(--btn-secondary);
+    color: var(--btn-secondary-text);
+}
+
+/* GUARDAR */
+.botones button:last-child {
+    background: var(--btn-primary);
+    color: var(--btn-text);
+}
+
+
+
+/*----------------------------------*/
+
+/* MODAL OCULTO */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    display: none; /* 👈 oculto */
+
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0,0,0,0.4); /* oscurece */
+    backdrop-filter: blur(8px); /* 👈 DESENFOQUE */
+}
+
+/* CUANDO SE ACTIVA */
+.modal.activo {
+    display: flex;
+}
+
+/* CONTENIDO */
+.modal-contenido {
+    background: #020617;
+    padding: 30px;
+    border-radius: 15px;
+    width: 400px;
+}

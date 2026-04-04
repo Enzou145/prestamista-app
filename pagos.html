@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Gestión Pro</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="pagos.css">
+</head>
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<aside class="sidebar">
+
+    <!-- TOP: Logo / App -->
+    <div class="sidebar-header">
+        <div class="logo">
+            <img src="/build/icon.ico" alt="">
+        </div>
+        <div>
+            <h2>Gestión Pro</h2>
+            <span>Administrador</span>
+        </div>
+    </div>
+
+    <!-- MENU -->
+    <nav class="sidebar-menu">
+        <ul>
+            <li>
+                <a href="/panel.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M277.8 8.6c-12.3-11.4-31.3-11.4-43.5 0l-224 208c-9.6 9-12.8 22.9-8 35.1S18.8 272 32 272l16 0 0 176c0 35.3 28.7 64 64 64l288 0c35.3 0 64-28.7 64-64l0-176 16 0c13.2 0 25-8.1 29.8-20.3s1.6-26.2-8-35.1l-224-208zM240 320l32 0c26.5 0 48 21.5 48 48l0 96-128 0 0-96c0-26.5 21.5-48 48-48z"/></svg>
+                    Inicio
+                </a>
+            </li>
+            <li>
+                <a href="clientes.html"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M320 16a104 104 0 1 1 0 208 104 104 0 1 1 0-208zM96 88a72 72 0 1 1 0 144 72 72 0 1 1 0-144zM0 416c0-70.7 57.3-128 128-128 12.8 0 25.2 1.9 36.9 5.4-32.9 36.8-52.9 85.4-52.9 138.6l0 16c0 11.4 2.4 22.2 6.7 32L32 480c-17.7 0-32-14.3-32-32l0-32zm521.3 64c4.3-9.8 6.7-20.6 6.7-32l0-16c0-53.2-20-101.8-52.9-138.6 11.7-3.5 24.1-5.4 36.9-5.4 70.7 0 128 57.3 128 128l0 32c0 17.7-14.3 32-32 32l-86.7 0zM472 160a72 72 0 1 1 144 0 72 72 0 1 1 -144 0zM160 432c0-88.4 71.6-160 160-160s160 71.6 160 160l0 16c0 17.7-14.3 32-32 32l-256 0c-17.7 0-32-14.3-32-32l0-16z"/></svg> Clientes</a>
+            </li>
+            <li class="activo">
+                <a href="pagos.html"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M64 32C28.7 32 0 60.7 0 96L0 384c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-192c0-35.3-28.7-64-64-64L72 128c-13.3 0-24-10.7-24-24S58.7 80 72 80l384 0c13.3 0 24-10.7 24-24s-10.7-24-24-24L64 32zM416 256a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg> Prestamos</a>
+            </li>
+            <li>
+                <a href="inventario.html"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M428.2 380.7L231.7 478.5c-2.3 1-4.8 1.5-7.3 1.5s-5-.5-7.3-1.5L20.5 380.7c-4-2-4-5.3 0-7.3L67.6 350c2.3-1 4.8-1.5 7.3-1.5s5 .5 7.3 1.5l134.8 67c2.3 1 4.8 1.5 7.3 1.5s5-.5 7.3-1.5l134.8-67c2.3-1 4.8-1.5 7.3-1.5s5 .5 7.3 1.5l47.1 23.4c4 2 4 5.2 0 7.2zm0-136.5l-47.1-23.4c-2.3-1-4.8-1.5-7.3-1.5s-5 .5-7.3 1.5L231.7 287.8c-2.3 1-4.8 1.5-7.3 1.5s-5-.5-7.3-1.5L82.3 220.7c-2.3-1-4.8-1.5-7.3-1.5s-5 .5-7.3 1.5L20.5 244.1c-4 2-4 5.3 0 7.3l196.5 97.8c2.3 1 4.8 1.5 7.3 1.5s5-.5 7.3-1.5l196.5-97.8c4-2 4-5.3 0-7.3zM20.5 130.4L217 220.7c4.7 1.9 10 1.9 14.7 0l196.5-90.3c4-1.9 4-4.9 0-6.7L231.7 33.4c-4.7-1.9-10-1.9-14.7 0L20.5 123.7c-4 1.8-4 4.9 0 6.7z"/></svg> Planes</a>
+            </li>
+            <div class="espacio"></div>
+
+            <li>
+                <a href="configuracion.html"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M195.1 9.5C198.1-5.3 211.2-16 226.4-16l59.8 0c15.2 0 28.3 10.7 31.3 25.5L332 79.5c14.1 6 27.3 13.7 39.3 22.8l67.8-22.5c14.4-4.8 30.2 1.2 37.8 14.4l29.9 51.8c7.6 13.2 4.9 29.8-6.5 39.9L447 233.3c.9 7.4 1.3 15 1.3 22.7s-.5 15.3-1.3 22.7l53.4 47.5c11.4 10.1 14 26.8 6.5 39.9l-29.9 51.8c-7.6 13.1-23.4 19.2-37.8 14.4l-67.8-22.5c-12.1 9.1-25.3 16.7-39.3 22.8l-14.4 69.9c-3.1 14.9-16.2 25.5-31.3 25.5l-59.8 0c-15.2 0-28.3-10.7-31.3-25.5l-14.4-69.9c-14.1-6-27.2-13.7-39.3-22.8L73.5 432.3c-14.4 4.8-30.2-1.2-37.8-14.4L5.8 366.1c-7.6-13.2-4.9-29.8 6.5-39.9l53.4-47.5c-.9-7.4-1.3-15-1.3-22.7s.5-15.3 1.3-22.7L12.3 185.8c-11.4-10.1-14-26.8-6.5-39.9L35.7 94.1c7.6-13.2 23.4-19.2 37.8-14.4l67.8 22.5c12.1-9.1 25.3-16.7 39.3-22.8L195.1 9.5zM256.3 336a80 80 0 1 0 -.6-160 80 80 0 1 0 .6 160z"/></svg> Configuración</a>
+            </li>
+        </ul>
+    </nav>
+
+
+    </nav>
+
+    <!-- USER -->
+<div class="sidebar-footer">
+    <img id="sidebarUserAvatar" src="build/avat.svg" alt="Foto de usuario">
+
+    <div class="sidebar-user-info">
+        <p id="sidebarUserName">Cargando...</p>
+        <span id="sidebarUserEmail">Cargando...</span>
+    </div>
+
+<button id="logoutBtn" class="logout-btn" type="button">
+    Cerrar sesión
+</button>
+</div>
+
+</aside>
+
+<!-- CONTENIDO -->
+<div class="main-content">
+
+    <!-- BARRA SUPERIOR -->
+   <header class="topbar">
+        <button class="hamburger-btn" id="hamburgerBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <h1>Prestamos</h1>
+    </header>
+
+    <!-- CONTENIDO DE LA PÁGINA -->
+    
+
+<!-- TARJETAS -->
+<div class="datos-arriba">
+    <div class="stat-box">
+        <div class="stat-icon azul">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+            </svg>
+        </div>
+        <h1 id="totalPrestado">$0</h1>
+        <span>Prestado</span>
+    </div>
+
+    <div class="stat-box">
+        <div class="stat-icon verde">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+            </svg>
+        </div>
+        <h1 id="prestamosActivos">0</h1>
+        <span>Activos</span>
+    </div>
+
+    <div class="stat-box">
+        <div class="stat-icon rojo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+        </div>
+        <h1 id="cuotasAtrasadas">0</h1>
+        <span>Vencidos</span>
+    </div>
+
+    <div class="stat-box">
+        <div class="stat-icon amarillo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/><polyline points="9 12 11 14 15 10"/>
+            </svg>
+        </div>
+        <h1 id="porCobrar">$0</h1>
+        <span>Por cobrar</span>
+    </div>
+</div>    <!------------------------------------>
+
+
+<div class="tabla">
+<div class="encabezado">
+    <div class="info-izq">
+        <h1>Historial de transacciones</h1>
+    </div>
+
+    <div class="topbar-right">
+        <input type="text" id="inputBuscar" placeholder=  "Buscar por nombre..." />
+        <svg class="btn-filtro-mobile" id="btnFiltroMobile" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M32 64C14.3 64 0 78.3 0 96s14.3 32 32 32l86.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 128c17.7 0 32-14.3 32-32s-14.3-32-32-32L265.3 64C253 35.7 224.8 16 192 16s-61 19.7-73.3 48L32 64zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l246.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48l54.7 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-54.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 224zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32l54.7 0c12.3 28.3 40.5 48 73.3 48s61-19.7 73.3-48L480 448c17.7 0 32-14.3 32-32s-14.3-32-32-32l-246.7 0c-12.3-28.3-40.5-48-73.3-48s-61 19.7-73.3 48L32 384z"/></svg>
+    </div>
+
+    <div class="filtros-container" id="filtrosContainer">
+        <select id="filtroEstado">
+            <option value="todos">Todos</option>
+            <option value="SIN_PLAN">Sin plan</option>
+            <option value="AL_DIA">Al día</option>
+            <option value="ATRASADO">Atrasado</option>
+            <option value="FINALIZADO">Finalizado</option>
+        </select>
+        <input type="number" id="filtroMonto" placeholder="Monto mayor a..." />
+        <button class="btn-secundario">Exportar</button>
+    </div>
+</div>
+
+    <div class="cabecera-tabla">
+        <span>NOMBRE</span>
+        <span>APELLIDO</span>
+        <span>MONTO PRESTADO</span>
+        <span>TOTAL A DEVOLVER</span>
+        <span>CUOTAS</span>
+        <span>VENCE</span>
+        <span>ESTADO</span>
+        <span>ACCIÓN</span>
+    </div>
+
+    <div class="lista-clientes" id="listaPagos"></div>
+        <div class="paginacion" style="justify-content: center; margin-top: 16px; padding-bottom: 8px;">
+        <button class="btn-icono" id="btnAnteriorPagos">&#8249;</button>
+        <button class="btn-icono" id="btnSiguientePagos">&#8250;</button>
+    </div>   
+    
+    
+
+
+    <div id="toast" class="toast"></div>
+
+<div class="modal-overlay" id="modalCobrar">
+  <!-- REEMPLAZA EL CONTENIDO DE <div id="modalCobrar"> -->
+<div class="modal-pago">
+    <div class="modal-header-pago">
+        <div>
+            <h2>Otorgar Préstamo</h2>
+            <p>Completa los datos del nuevo préstamo</p>
+        </div>
+        <button class="cerrar-modal" id="cerrarModalCobrar">&times;</button>
+    </div>
+
+    <form id="formCobrarPago" class="form-pago">
+        <!-- CLIENTE (Solo lectura) -->
+        <div class="campo-pago">
+            <label>CLIENTE *</label>
+            <input type="text" id="nombreClientePrestamo" readonly style="background: #0b1630; color: #94a3b8; font-weight: bold;">
+        </div>
+
+        <div class="fila-pago">
+            <div class="campo-pago">
+                <label>MONTO PRESTADO *</label>
+                <input type="number" id="montoPrestado" placeholder="Ej: 100000" required>
+            </div>
+            <div class="campo-pago">
+                <label>INTERÉS (%) *</label>
+                <input type="number" id="interesPrestado" placeholder="Ej: 10" required>
+            </div>
+        </div>
+
+        <div class="campo-pago">
+            <label>CANTIDAD DE CUOTAS *</label>
+            <input type="number" id="cuotasPrestado" placeholder="Ej: 6" required>
+        </div>
+
+        <div class="grupo-flex">
+    <div>
+        <label>CADA *</label>
+        <input type="number" id="intervaloPago" value="1">
+    </div>
+
+    <div>
+        <label>FRECUENCIA DE PAGO *</label>
+        <select id="frecuenciaPago">
+            <option value="mes">Mes</option>
+            <option value="semana">Semana</option>
+            <option value="dia">Día</option>
+        </select>
+    </div>
+</div>
+
+        <div class="fila-pago">
+            <div class="campo-pago">
+                <label>FECHA INICIO *</label>
+                <input type="date" id="fechaInicio" required>
+            </div>
+            <div class="campo-pago">
+                <label>FECHA FIN *</label>
+                <input type="date" id="fechaFin">
+            </div>
+        </div>
+
+        <!-- SECCIÓN DE CÁLCULOS (Igual a la imagen) -->
+        <div class="campos-calculados">
+            <p class="titulo-calculados">CAMPOS CALCULADOS</p>
+            <div class="grid-calculados">
+                <div class="item-calculado">
+                    <span>TOTAL A DEVOLVER</span>
+                    <strong id="totalDevolverDisplay">$ 0</strong>
+                </div>
+                <div class="item-calculado">
+                    <span>VALOR POR CUOTA</span>
+                    <strong id="valorCuotaDisplay">$ 0</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="acciones-modal-pago">
+            <button type="button" class="btn-cancelar-pago" id="cancelarModalCobrar">Cancelar</button>
+            <button type="submit" class="btn-guardar-pago">Guardar Préstamo</button>
+        </div>
+    </form>
+</div>
+</div>
+
+<!------------------------------------------>
+<div class="modal-overlay" id="modalCobrarCuota">
+  <div class="modal-pago">
+
+    <!-- HEADER -->
+    <div class="modal-header-pago">
+      <div>
+        <h2>Cobrar Cuota</h2>
+        <p id="infoClienteModal">Cliente...</p>
+      </div>
+      <button class="cerrar-modal" id="cerrarModalCuota">&times;</button>
+    </div>
+
+    <!-- CONTENIDO -->
+    <div class="form-pago">
+
+      <!-- DATOS PRESTAMO -->
+      <div class="cliente-resumen">
+        <div class="item-resumen-pago">
+          <small>Monto</small>
+          <strong id="modalMonto">$0</strong>
+        </div>
+        <div class="item-resumen-pago">
+          <small>Total</small>
+          <strong id="modalTotal">$0</strong>
+        </div>
+        <div class="item-resumen-pago">
+          <small>Cuota</small>
+          <strong id="modalCuota">$0</strong>
+        </div>
+        <div class="item-resumen-pago">
+          <small>Progreso</small>
+          <strong id="modalProgreso">0/0</strong>
+        </div>
+      </div>
+
+      <!-- PROGRESS BAR -->
+      <div class="barra-progreso">
+        <div class="progreso" id="barraProgreso"></div>
+      </div>
+
+      <!-- PAGAR CUOTAS -->
+      <div class="campo-pago">
+        <label>CANTIDAD DE CUOTAS A PAGAR</label>
+        <input type="number" id="inputCuotasPagar" min="1" value="1">
+      </div>
+
+      <div class="campo-pago">
+        <label>TOTAL A PAGAR</label>
+        <input type="text" id="totalPagarDisplay" readonly>
+      </div>
+
+      <!-- ACCIONES -->
+      <div class="acciones-modal-pago">
+        <button class="btn-cancelar-pago" id="btnPagoTotal">Pagar todo</button>
+        <button class="btn-guardar-pago" id="btnConfirmarPago">Confirmar pago</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div id="logoutModal" class="logout-modal-overlay">
+    <div class="logout-modal">
+        <div class="logout-modal-icon">↪</div>
+        <h3>¿Cerrar sesión?</h3>
+        <p>Vas a salir de tu cuenta actual.</p>
+
+        <div class="logout-modal-actions">
+            <button id="cancelLogoutBtn" class="btn-modal-secundario" type="button">
+                Cancelar
+            </button>
+            <button id="confirmLogoutBtn" class="btn-modal-danger" type="button">
+                Sí, cerrar sesión
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="pagos.js"></script>
+<script src="tema.js"></script>
+</body>
+</html>
+
+<!--Lógica de la columna “Acciones”
+Estado = Sin préstamo → botón: Asignar préstamo
+Abre modal para asignar el préstamo (campos: monto, interés, cuotas, fechas, total a devolver calculado, valor de cada cuota).
+Estado = Activo → botón: Cobrar cuota
+Abre modal de cobro de cuota: muestra monto de la cuota y fecha.
+Al pagar: se actualiza Cuotas Pagadas, Estado (si completa todas las cuotas → “Finalizado”).
+Estado = Finalizado → sin botones
+Ya no hay acción disponible, solo visualizar.-->

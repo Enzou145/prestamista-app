@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modificar Cliente</title>
+    <link rel="stylesheet" href="modificarcliente.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="tabla">
+
+    <div class="titulo">
+        <div>
+            <h1>Modificar Cliente</h1>
+            <p>Edita los datos del cliente seleccionado</p>
+        </div>
+        <span class="cerrar">✕</span>
+    </div>
+
+    <!-- FILA 1 -->
+    <div class="fila">
+        <div class="campo">
+            <label>Nombre</label>
+            <input type="text" value="Juan">
+        </div>
+
+        <div class="campo">
+            <label>Apellido</label>
+            <input type="text" value="Pérez">
+        </div>
+    </div>
+
+    <!-- FILA 2 -->
+    <div class="fila">
+        <div class="campo">
+            <label>Teléfono</label>
+            <input type="text" value="+34 600 123 456">
+        </div>
+
+        <div class="campo">
+            <label>Email</label>
+            <input type="text" value="juan.perez@example.com">
+        </div>
+    </div>
+
+    <!-- ESTADO -->
+    <div class="campo">
+        <label>Estado del cliente</label>
+        <select>
+            <option>Activo</option>
+            <option>Inactivo</option>
+        </select>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="botones">
+        <a href="clientes.html"><button class="cancelar">Cancelar</button></a>
+        <a href="clientes.html"><button class="guardar">Guardar Cambios</button></a>
+    </div>
+
+</div>
+
+</body>
+</html>

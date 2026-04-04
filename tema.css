@@ -1,0 +1,32 @@
+/* 🌙 MODO OSCURO (por defecto) */
+:root {
+    --bg: #020617;
+    --text: #ffffff;
+    --card: #00fd2a;
+}
+
+/* ☀️ MODO CLARO */
+.light {
+    --bg: #fffef3;
+    --text: #16003a;
+    --card: #422655;
+}
+
+body {
+    background: var(--bg);
+    padding: 20px;
+    border-radius: 10px;
+    color: var(--text);
+}
+
+button:hover  {
+    background-color: var(--card);
+    color: var(--bg);
+}
+
+button{
+    background: var(--text);
+    color: var(--bg);
+    cursor: pointer;
+}
+
