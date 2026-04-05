@@ -1657,16 +1657,16 @@ background-color: rgba(255,255,255,0.1);}
 
 /* Colores aplicados a ambos bordes (el grosor decidirá cuál se ve) */
 .border-status-al_dia { 
-    border-left-color: #4ade80 !important; 
-    border-top-color: #4ade80 !important; 
+    border-left-color: #00bd29d5 !important; 
+    border-top-color: #00bd29d5 !important; 
 }
 .border-status-atrasado { 
-    border-left-color: #f87171 !important; 
-    border-top-color: #f87171 !important; 
+    border-left-color: #ff5252 !important; 
+    border-top-color: #ff5252 !important; 
 }
 .border-status-finalizado { 
-    border-left-color: #60a5fa !important; 
-    border-top-color: #60a5fa !important; 
+    border-left-color: #0063d4 !important; 
+    border-top-color: #0063d4 !important; 
 }
 .border-status-sin_prestamo { 
     border-left-color: #fbbf24 !important; 
@@ -1686,7 +1686,7 @@ background-color: rgba(255,255,255,0.1);}
 /* --- BOTÓN AGREGAR (EL CIAN) --- */
 .btn-principal-v2 {
     width: 100%;
-    background: #0ea5e9; /* Color Cian de la imagen */
+    background: linear-gradient(135deg, #0077ff , #0063d4 ) !important;
     color: white;
     border: none;
     padding: 14px;
@@ -1696,9 +1696,10 @@ background-color: rgba(255,255,255,0.1);}
     align-items: center;
     justify-content: center;
     gap: 10px;
+    margin-top: 25px;
     margin-bottom: 20px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+    box-shadow: 0 4px 10px #0077ff50;
 }
 
 /* --- SUB-HEADER (CONTADOR Y FILTROS) --- */
@@ -1710,9 +1711,12 @@ background-color: rgba(255,255,255,0.1);}
 }
 
 .contador-v2 {
-    color: #f8fafc;
-    font-size: 14px;
+    color: #dadada;
+    font-size: 12px;
     font-weight: 600;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
 
 .botones-agrupados {
@@ -1721,9 +1725,9 @@ background-color: rgba(255,255,255,0.1);}
 }
 
 .btn-outline-v2 {
-    background: rgba(14, 165, 233, 0.1);
-    border: 1px solid rgba(14, 165, 233, 0.4);
-    color: #38bdf8;
+    background: #0063d427 !important;
+    border: 1px solid #0077ff;
+    color: #0077ff;
     padding: 8px 16px;
     border-radius: 10px;
     font-size: 13px;
