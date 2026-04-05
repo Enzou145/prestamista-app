@@ -1614,24 +1614,24 @@ background-color: rgba(255,255,255,0.1);}
   .topbar-right input {
     width: 100% !important;
     font-size: 0.85rem !important;
-    padding: 15px 14px !important;
+    padding: 18px 14px !important;
     border-radius: 9px !important;
     background: rgba(255,255,255,0.04) !important;
     border: 1px solid rgba(255,255,255,0.08) !important;
-    color: #cfd8e3 !important;
+    color: #ffffff !important;
     outline: none;
     transition: border-color 0.2s;
   }
 
   .topbar-right input:focus {
-    border-color: rgba(255,140,0,0.45) !important;
-    background: rgba(255,140,0,0.03) !important;
+    border-color: #0077ff50!important;
+    background: rgba(133, 133, 133, 0.03) !important;
   }
 
   .topbar-right input::placeholder { color: #2e3d55 !important; }
 
   .btn-filtro-mobile {
-    width: 30px;
+    width: 20px;
     height: 20px;
     fill: #546e8a;
     flex-shrink: 0;
