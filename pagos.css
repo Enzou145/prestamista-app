@@ -1488,7 +1488,7 @@ background-color: rgba(255,255,255,0.1);}
     align-items: center !important;
     min-height: 0 !important;
     background: rgba(20, 26, 48, 0.98) !important;
-    border-bottom: 1px solid rgba(255, 140, 0, 0.2) !important;
+    border-bottom: 1px solid #0077ff63 !important;
     backdrop-filter: blur(12px);
   }
 
@@ -1536,14 +1536,14 @@ background-color: rgba(255,255,255,0.1);}
     margin-bottom: 4px;
   }
 
-  .stat-icon.azul     { background: rgba(255,140,0,0.15);  border: 1px solid rgba(255,140,0,0.25); }
-  .stat-icon.verde    { background: rgba(0,188,212,0.15);  border: 1px solid rgba(0,188,212,0.25); }
-  .stat-icon.rojo     { background: rgba(255,82,82,0.15);  border: 1px solid rgba(255,82,82,0.25); }
-  .stat-icon.amarillo { background: rgba(255,193,7,0.15);  border: 1px solid rgba(255,193,7,0.25); }
+  .stat-icon.azul     { background: rgba(0, 81, 255, 0.082);  border: 1px solid #3b82f6; }
+  .stat-icon.verde    { background: #00a7241c;  border: 1px solid #00a724; }
+  .stat-icon.rojo     { background: rgba(255, 42, 42, 0.103);  border: 1px solid rgba(255, 64, 64, 0.384); }
+  .stat-icon.amarillo { background: rgba(255, 191, 0, 0.075);  border: 1px solid rgba(255, 193, 7, 0.288); }
 
-  .stat-icon.azul svg     { stroke: #ff8c00 !important; }
-  .stat-icon.verde svg    { stroke: #00bcd4 !important; }
-  .stat-icon.rojo svg     { stroke: #ff5252 !important; }
+  .stat-icon.azul svg     { stroke: #3b82f6 !important; }
+  .stat-icon.verde svg    { stroke: #00a724 !important; }
+  .stat-icon.rojo svg     { stroke: #fc4747 !important; }
   .stat-icon.amarillo svg { stroke: #ffc107 !important; }
 
   .stat-box h1 {
@@ -1667,8 +1667,8 @@ background-color: rgba(255,255,255,0.1);}
     border-radius: 8px !important;
     white-space: nowrap;
     background: #0063d427 !important;
-    color: #0063d4 !important;
-    border: 1px solid #0063d4 !important;
+    color: #0077ff!important;
+    border: 1px solid #0077ff!important;
     font-weight: 700 !important;
     letter-spacing: 0.3px;
   }
@@ -1733,13 +1733,13 @@ background-color: rgba(255,255,255,0.1);}
   .avatar-icon {
     width: 32px;
     height: 32px;
-    background: #0063d41c;
+    background: #0077ff1c;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    border: 0.5px solid #0063d486;
+    border: 0.1px solid #0051ff;
   }
 
   .card-nombre strong {
