@@ -5,6 +5,7 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 /* =========================
    SIDEBAR USUARIO + LOGOUT
 ========================= */
+
 const sidebarUserAvatar = document.getElementById("sidebarUserAvatar");
 const sidebarUserName = document.getElementById("sidebarUserName");
 const sidebarUserEmail = document.getElementById("sidebarUserEmail");
@@ -65,6 +66,7 @@ let totalClientes = 0;
 let filtroActual = "";
 let clienteEnEdicion = null;
 let clienteAEliminar = null;
+let estadoFiltroActual = "todos";
 
 // Elementos del DOM
 const listaClientes = document.getElementById("listaClientes");
@@ -130,53 +132,140 @@ function mostrarToast(mensaje, tipo = "success") {
     setTimeout(() => { toast.className = "toast"; }, 2500);
 }
 
-/* === REEMPLAZA ESTA FUNCIÓN === */
-function crearBadgeEstado(estado) {
-    // Si el estado es null o undefined, le asignamos "Inactivo" por defecto
-    const valorEstado = estado ? estado.toString() : "Inactivo";
+    function crearBadgeEstado(estado) {
+    // Tomamos el valor de la BD o por defecto sin_prestamo
+    const valor = estado ? estado.toString().toLowerCase() : "sin_prestamo";
     
-    let clase = "inactivo"; 
-    if (valorEstado.toLowerCase() === "activo") clase = "activo";
-    if (valorEstado.toLowerCase() === "sin prestamo") clase = "pendiente";
-
-    return `<span class="estado ${clase}">${valorEstado.toUpperCase()}</span>`;
+    // El texto que verá el usuario (ej: "AL DIA")
+    const textoMostrar = valor.replace("_", " ").toUpperCase();
+    
+    // La clase CSS será igual al valor (al_dia, atrasado, etc.)
+    return `<span class="estado ${valor}">${textoMostrar}</span>`;
 }
 
-function actualizarContador(mostrados, total) {
-    const hasta = Math.min((paginaActual + 1) * PAGE_SIZE, total);
-    contadorClientes.textContent = `Mostrando ${hasta} de ${total} clientes`;
+
+function actualizarPaginacion() {
+    // 1. Detectar el tamaño de página (algunos usan PAGE_SIZE, otros clientesPorPagina)
+    const limit = (typeof PAGE_SIZE !== 'undefined') ? PAGE_SIZE : (typeof clientesPorPagina !== 'undefined' ? clientesPorPagina : 7);
+    
+    // 2. Calcular total de páginas
+    const totalPaginas = Math.ceil(totalClientes / limit) || 1;
+    
+    // 3. Actualizar el texto "1 / 3"
+    const infoPagina = document.getElementById("infoPagina");
+    if (infoPagina) {
+        infoPagina.textContent = `${paginaActual} / ${totalPaginas}`;
+    }
+
+    // 4. Actualizar el texto "Mostrando X-Y de Z"
+    const contador = document.getElementById("contadorClientes");
+    if (contador) {
+        const inicio = totalClientes === 0 ? 0 : ((paginaActual - 1) * limit) + 1;
+        const fin = Math.min(paginaActual * limit, totalClientes);
+        
+        if (totalClientes === 0) {
+            contador.textContent = "Mostrando 0 de 0 clientes";
+        } else {
+            contador.textContent = `Mostrando ${inicio}-${fin} de ${totalClientes} clientes`;
+        }
+    }
+
+    // 5. Habilitar/Deshabilitar botones
+    const btnAnt = document.getElementById("btnAnterior");
+    const btnSig = document.getElementById("btnSiguiente");
+    if (btnAnt) btnAnt.disabled = paginaActual === 1;
+    if (btnSig) btnSig.disabled = paginaActual >= totalPaginas;
+
+
 }
 
-function abrirModal(modal) { modal.classList.add("active"); }
-function cerrarModal(modal) { modal.classList.remove("active"); }
+// Ejemplo para abrir:
+function abrirModal() {
+    document.getElementById('modalNuevoCliente').classList.add('active'); // O como lo manejes
+    document.body.classList.add('modal-open'); // BLOQUEA SCROLL FONDO
+}
 
+// Ejemplo para cerrar:
+function cerrarModal() {
+    document.getElementById('modalNuevoCliente').classList.remove('active');
+    document.body.classList.remove('modal-open'); // ACTIVA SCROLL FONDO
+}
 
 function crearFilaCliente(cliente) {
-    const fila = document.createElement("div");
-    fila.className = "fila-cliente";
 
+    const fila = document.createElement("div");
+
+    // Normalizamos el estado para usarlo como clase (ej: "al_dia", "atrasado")
+    const estadoClase = cliente.estado ? cliente.estado.toString().toLowerCase() : "sin_prestamo";
+        
+    // Agregamos la clase base y la clase de borde específica
+    fila.className = `fila-cliente border-status-${estadoClase}`;
+    
     const esMobile = window.innerWidth <= 768;
 
     if (esMobile) {
+        const direccion = [cliente.ciudad, cliente.barrio, cliente.calle, cliente.nro_calle].filter(Boolean).join(', ') || "-";
+
         fila.innerHTML = `
-            <span class="nombre">
-                ${cliente.nombre} ${cliente.apellido}
-                ${crearBadgeEstado(cliente.estado)}
-            </span>
-            <span data-label="DNI">${cliente.dni || "-"}</span>
-            <span data-label="Teléfono">${cliente.telefono || "-"}</span>
-            <span data-label="Ocupación">${cliente.ocupacion || "-"}</span>
-            <span class="acciones">
-                <button class="accion-editar" title="Editar">
-                    <svg viewBox="0 0 24 24" fill="none" width="16"><path d="M12 20H21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16.5 3.5A2.12 2.12 0 1 1 19.5 6.5L7 19L3 20L4 16L16.5 3.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
-                    Editar
-                </button>
-                <button class="accion-eliminar" title="Eliminar">
-                    <svg viewBox="0 0 24 24" fill="none" width="16"><path d="M3 6H21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M8 6V4A1 1 0 0 1 9 3H15A1 1 0 0 1 16 4V6" stroke="currentColor" stroke-width="1.8"/><path d="M19 6L18 20A1 1 0 0 1 17 21H7A1 1 0 0 1 6 20L5 6" stroke="currentColor" stroke-width="1.8"/></svg>
-                    Eliminar
-                </button>
-            </span>
+            <div class="card-header-mobile">
+                <div class="card-avatar">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div class="card-info-principal">
+                    <span class="card-nombre-mobile">${cliente.nombre} ${cliente.apellido}</span>
+                </div>
+                <div class="card-header-right">
+                    ${crearBadgeEstado(cliente.estado)}
+                    <div class="card-chevron">
+                        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                    </div>
+                </div>
+            </div>
+            <div class="detalle-colapsable">
+                <!-- ... resto del código igual ... -->
+                <div class="detalle-inner">
+                    <div class="detalle-grid">
+                        <div class="detalle-item">
+                            <span class="detalle-label"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>DNI</span>
+                            <span class="detalle-valor">${cliente.dni || "-"}</span>
+                        </div>
+                        <div class="detalle-item">
+                            <span class="detalle-label"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.58 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Teléfono</span>
+                            <span class="detalle-valor">${cliente.telefono || "-"}</span>
+                        </div>
+                        <div class="detalle-item full-width">
+                            <span class="detalle-label"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Dirección</span>
+                            <span class="detalle-valor">${direccion}</span>
+                        </div>
+                        <div class="detalle-item full-width">
+                            <span class="detalle-label"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>Ocupación</span>
+                            <span class="detalle-valor">${cliente.ocupacion || "-"}</span>
+                        </div>
+                    </div>
+                    <div class="acciones-expandidas">
+                        <button class="accion-editar">Editar</button>
+                        <button class="accion-eliminar">Eliminar</button>
+                    </div>
+                </div>
+            </div>
         `;
+        
+        fila.querySelector('.card-header-mobile').addEventListener('click', () => {
+            // 1. Verificamos si la fila actual ya está expandida
+            const estaExpandido = fila.classList.contains('expandido');
+
+            // 2. Buscamos cualquier otra fila que tenga la clase 'expandido' y se la quitamos
+            document.querySelectorAll('.fila-cliente.expandido').forEach(f => {
+                f.classList.remove('expandido');
+            });
+
+            // 3. Si la fila que tocamos NO estaba abierta, la abrimos
+            // Si ya estaba abierta, se quedará cerrada por el paso anterior
+            if (!estaExpandido) {
+                fila.classList.add('expandido');
+            }
+        });
+
     } else {
         fila.innerHTML = `
             <span class="nombre">${cliente.nombre}</span>
@@ -196,8 +285,7 @@ function crearFilaCliente(cliente) {
         `;
     }
 
-    // ── EVENTOS (sin cambios, funcionan igual en ambas versiones) ──
-
+    // Eventos editar/eliminar (funcionan para ambas versiones)
     fila.querySelector(".accion-editar").addEventListener("click", () => {
         clienteEnEdicion = cliente;
         editarNombreCliente.value = cliente.nombre || "";
@@ -209,7 +297,7 @@ function crearFilaCliente(cliente) {
         editarCalleCliente.value = cliente.calle || "";
         editarNroCliente.value = cliente.nro_calle || "";
         editarOcupacionCliente.value = cliente.ocupacion || "";
-        editarEstadoCliente.value = cliente.estado || "Activo";
+        //editarEstadoCliente.value = cliente.estado || "Activo";
         editarSenaCliente.value = cliente.sena || "";
         editarMontoCliente.value = cliente.monto_inicial || 0;
         abrirModal(modalEditarCliente);
@@ -236,19 +324,26 @@ function crearFilaCliente(cliente) {
     });
 
     return fila;
-}
-window.addEventListener("resize", () => cargarClientes());
+}window.addEventListener("resize", () => cargarClientes());
 
 async function cargarClientes() {
+    // 1. Consultas a Supabase
     let queryCount = supabaseClient.from("clientes").select("*", { count: "exact", head: true });
     let queryData = supabaseClient.from("clientes").select("*").order("id", { ascending: false })
-        .range(paginaActual * PAGE_SIZE, paginaActual * PAGE_SIZE + PAGE_SIZE - 1);
+        .range(paginaActual * PAGE_SIZE, (paginaActual * PAGE_SIZE) + PAGE_SIZE - 1);
 
     if (filtroActual.trim() !== "") {
         const filterStr = `nombre.ilike.%${filtroActual}%,apellido.ilike.%${filtroActual}%,dni.ilike.%${filtroActual}%`;
         queryCount = queryCount.or(filterStr);
         queryData = queryData.or(filterStr);
     }
+
+    // --- AGREGA ESTO AQUÍ ---
+    if (typeof estadoFiltroActual !== 'undefined' && estadoFiltroActual !== "todos") {
+        queryCount = queryCount.eq("estado", estadoFiltroActual);
+        queryData = queryData.eq("estado", estadoFiltroActual);
+    }
+    // ------------------------
 
     const [{ count, error: errorCount }, { data, error: errorData }] = await Promise.all([queryCount, queryData]);
 
@@ -258,14 +353,21 @@ async function cargarClientes() {
     }
 
     totalClientes = count || 0;
+    const clientesCargados = data || [];
+    
+    // 2. Renderizar la lista
     listaClientes.innerHTML = "";
-    (data || []).forEach(cliente => listaClientes.appendChild(crearFilaCliente(cliente)));
+    if (clientesCargados.length > 0) {
+        clientesCargados.forEach(cliente => {
+            listaClientes.appendChild(crearFilaCliente(cliente));
+        });
+    } else {
+        listaClientes.innerHTML = `<p style="text-align:center; color:#64748b; padding:20px;">No hay resultados.</p>`;
+    }
 
-    actualizarContador((data || []).length, totalClientes);
-    btnAnterior.disabled = paginaActual === 0;
-    btnSiguiente.disabled = (paginaActual + 1) * PAGE_SIZE >= totalClientes;
+    // 3. ACTUALIZAR INTERFAZ
+    actualizarInterfazPaginacion(clientesCargados.length);
 }
-
 // EVENTOS FORMULARIOS
 formNuevoCliente.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -280,7 +382,7 @@ formNuevoCliente.addEventListener("submit", async (e) => {
         calle: nuevoCalle.value.trim(),
         nro_calle: nuevoNro.value.trim(),
         ocupacion: nuevoOcupacionCliente.value.trim(),
-        estado: nuevoEstadoCliente.value.trim(),
+        estado: "sin_prestamo",
         // NUEVOS CAMPOS
         sena: nuevoSenaCliente.value.trim(),
         monto_inicial: parseFloat(nuevoMontoCliente.value) || 0
@@ -321,7 +423,8 @@ formEditarCliente.addEventListener("submit", async (e) => {
         sena: editarSenaCliente.value.trim(),
         monto_inicial: parseFloat(editarMontoCliente.value) || 0,
 
-        estado: editarEstadoCliente.value
+        // ❌ NO TOCAR EL ESTADO DESDE CLIENTES
+        // estado eliminado
     };
 
     const { error } = await supabaseClient
@@ -392,15 +495,8 @@ function reseteatBotonEliminar() {
     confirmarEliminarCliente.classList.remove("segunda-confirmacion");
 }
 
-// BUSCADOR Y PAGINACIÓN
-buscadorClientes.addEventListener("input", () => {
-    filtroActual = buscadorClientes.value.trim();
-    paginaActual = 0;
-    cargarClientes();
-});
 
-btnAnterior.addEventListener("click", () => { if (paginaActual > 0) { paginaActual--; cargarClientes(); } });
-btnSiguiente.addEventListener("click", () => { if ((paginaActual+1) * PAGE_SIZE < totalClientes) { paginaActual++; cargarClientes(); } });
+
 
 // CONFIGURACIÓN DE MODALES (Cerrar)
 abrirModalNuevo.addEventListener("click", () => abrirModal(modalNuevoCliente));
@@ -419,9 +515,88 @@ window.addEventListener("click", (e) => {
     if (e.target.classList.contains("modal-overlay")) cerrarModal(e.target);
 });
 
+/* =========================================
+   BUSCADOR Y PAGINACIÓN (CORREGIDO)
+   ========================================= */
+
+// 1. Buscador (Resetea a la página 1)
+buscadorClientes.addEventListener("input", () => {
+    filtroActual = buscadorClientes.value.trim();
+    paginaActual = 0;
+    cargarClientes();
+});
+
+// 2. Función Unificada para actualizar la interfaz
+function actualizarInterfazPaginacion(cantidadEnPagina) {
+    const totalPaginas = Math.ceil(totalClientes / PAGE_SIZE) || 1;
+
+    const infoPagina = document.getElementById("infoPagina");
+    if (infoPagina) {
+        infoPagina.textContent = `${paginaActual + 1} / ${totalPaginas}`;
+    }
+
+    if (contadorClientes) {
+        if (totalClientes === 0) {
+            contadorClientes.textContent = "Mostrando 0 de 0 clientes";
+        } else {
+            // 🔥 CLAVE: calcular acumulado
+            const mostrados = Math.min((paginaActual + 1) * PAGE_SIZE, totalClientes);
+
+            contadorClientes.textContent = `Mostrando ${mostrados} de ${totalClientes} clientes`;
+        }
+    }
+
+    btnAnterior.disabled = (paginaActual === 0);
+    btnSiguiente.disabled = (paginaActual + 1 >= totalPaginas);
+}
+
+// 3. Carga Inicial y Configuración de Botones
 document.addEventListener("DOMContentLoaded", () => {
     cargarUsuarioLogueado();
     cargarClientes();
+
+    // --- LÓGICA DE FILTROS ---
+    
+    // Botón principal de Filtros (Abre/Cierra el panel)
+    const btnAbrirFiltros = document.getElementById('btn-abrir-filtros');
+    if (btnAbrirFiltros) {
+        btnAbrirFiltros.onclick = () => {
+            const panel = document.getElementById('contenedor-filtros-pills');
+            panel.classList.toggle('d-none-mobile');
+        };
+    }
+
+    // Botones redondos (Pills)
+    document.querySelectorAll('.pill-filter').forEach(boton => {
+        boton.onclick = () => {
+            // Estética: Quitamos active de todos y ponemos al actual
+            document.querySelectorAll('.pill-filter').forEach(b => b.classList.remove('active'));
+            boton.classList.add('active');
+
+            // Lógica: Filtramos y reseteamos a la página 1
+            estadoFiltroActual = boton.getAttribute('data-estado');
+            paginaActual = 0; 
+            cargarClientes();
+        };
+    });
+
+    // --- CONFIGURACIÓN DE CLICS PAGINACIÓN ---
+    btnAnterior.onclick = (e) => {
+        e.preventDefault();
+        if (paginaActual > 0) {
+            paginaActual--;
+            cargarClientes();
+        }
+    };
+
+    btnSiguiente.onclick = (e) => {
+        e.preventDefault();
+        const totalPaginas = Math.ceil(totalClientes / PAGE_SIZE);
+        if (paginaActual + 1 < totalPaginas) {
+            paginaActual++;
+            cargarClientes();
+        }
+    };
 });
 
 // ====== HAMBURGUESA / SIDEBAR MOBILE ======

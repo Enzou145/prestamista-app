@@ -62,64 +62,33 @@ function filasPorPagina() {
     return window.matchMedia("(max-width: 768px)").matches ? 4 : 7;
 }
 
-function actualizarResumen() {
-    let totalPrestado = 0;
-    let activos = 0;
-    let atrasados = 0;
-
-    clientesGlobal.forEach(cliente => {
-        const prestamo = cliente.prestamos?.slice(-1)[0] || null;
-
-        if (!prestamo) return;
-
-        totalPrestado += prestamo.monto_prestado;
-
-        const estado = obtenerEstadoCliente(cliente);
-
-        if (estado === "AL_DIA") activos++;
-        if (estado === "ATRASADO") atrasados++;
-    });
-
-    totalPrestadoEl.textContent = `$ ${totalPrestado.toLocaleString('es-AR')}`;
-    prestamosActivosEl.textContent = activos;
-    cuotasAtrasadasEl.textContent = atrasados;
-}
 
 
 function obtenerEstadoCliente(cliente) {
     const prestamo = cliente.prestamos?.slice(-1)[0] || null;
-
-    if (!prestamo) return "SIN_PLAN";
+    if (!prestamo) return "sin_prestamo"; // Cambiado: minúscula y guion bajo
 
     const pagadas = prestamo.cuotas_pagadas || 0;
     const total = prestamo.cuotas;
 
-    if (pagadas >= total) return "FINALIZADO";
+    if (pagadas >= total) return "finalizado";
 
     const hoy = new Date();
     hoy.setHours(0,0,0,0);
 
     let fecha = new Date(prestamo.fecha_inicio + "T00:00:00");
+    const avance = (pagadas + 1) * (prestamo.intervalo_pago || 1);
 
-    const frecuencia = prestamo.frecuencia_pago;
-    const intervalo = prestamo.intervalo_pago || 1;
-
-    const avance = (pagadas + 1) * intervalo;
-
-    if (frecuencia === "mes") {
+    if (prestamo.frecuencia_pago === "mes") {
         fecha.setMonth(fecha.getMonth() + avance);
-    } else if (frecuencia === "semana") {
+    } else if (prestamo.frecuencia_pago === "semana") {
         fecha.setDate(fecha.getDate() + (7 * avance));
     } else {
         fecha.setDate(fecha.getDate() + avance);
     }
-
     fecha.setHours(0,0,0,0);
 
-    const diffDias = Math.ceil((fecha - hoy) / (1000 * 60 * 60 * 24));
-
-    if (diffDias < 0) return "ATRASADO";
-    return "AL_DIA";
+    return fecha < hoy ? "atrasado" : "al_dia"; // Cambiado: minúsculas y guion bajo
 }
 
 
@@ -130,9 +99,13 @@ document.getElementById("btnFiltroMobile")?.addEventListener("click", () => {
 /* ==========================================
    INIT
 ========================================== */
-document.addEventListener("DOMContentLoaded", () => {
-    cargarListaParaCobrar();
-    configurarCalculos();
+document.addEventListener("DOMContentLoaded", async () => {
+    await actualizarEstadosAutomaticos(); // 🔥 primero actualiza estados
+
+    cargarListaParaCobrar();   // lo que ya tenías
+    configurarCalculos();      // lo que ya tenías
+
+    cargarUsuarioLogueado();   // opcional si lo usás en esta vista
 });
 
 inputBuscar.addEventListener("input", () => {
@@ -167,6 +140,73 @@ async function cargarListaParaCobrar() {
 
 }
 
+/*-------------------------------------*/
+function calcularEstadoPrestamo(prestamo) {
+    const pagadas = prestamo.cuotas_pagadas || 0;
+    const total = prestamo.cuotas;
+
+    // 1. Verificar si ya terminó
+    if (pagadas >= total) return "finalizado";
+
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+
+    // 2. Fecha de inicio (asegurando formato ISO)
+    let fechaVencimiento = new Date(prestamo.fecha_inicio + "T00:00:00");
+    const frecuencia = prestamo.frecuencia_pago;
+    const intervalo = prestamo.intervalo_pago || 1;
+
+    // 3. Calculamos cuándo vence la PRÓXIMA cuota (la que aún no se pagó)
+    // Si pagadas es 0, nos da la fecha de la 1er cuota.
+    const avance = (pagadas + 1) * intervalo;
+
+    if (frecuencia === "mes") {
+        fechaVencimiento.setMonth(fechaVencimiento.getMonth() + avance);
+    } else if (frecuencia === "semana") {
+        fechaVencimiento.setDate(fechaVencimiento.getDate() + (7 * avance));
+    } else { // "dia"
+        fechaVencimiento.setDate(fechaVencimiento.getDate() + avance);
+    }
+
+    fechaVencimiento.setHours(0, 0, 0, 0);
+
+    // 4. Si la fecha de vencimiento de la cuota pendiente es anterior a HOY, está atrasado
+    return fechaVencimiento < hoy ? "atrasado" : "al_dia";
+}
+
+async function actualizarEstadosAutomaticos() {
+    const { data: prestamos, error } = await supabaseClient
+        .from("prestamos")
+        .select("*");
+
+    if (error) {
+        console.error("Error cargando préstamos:", error);
+        return;
+    }
+
+    for (const prestamo of prestamos) {
+        const nuevoEstado = calcularEstadoPrestamo(prestamo);
+
+        if (prestamo.estado_pago !== nuevoEstado) {
+
+            // 1. ACTUALIZA PRÉSTAMO
+            await supabaseClient
+                .from("prestamos")
+                .update({ estado_pago: nuevoEstado })
+                .eq("id", prestamo.id);
+
+            // 2. ACTUALIZA CLIENTE
+            await supabaseClient
+                .from("clientes")
+                .update({ estado: nuevoEstado })
+                .eq("id", prestamo.cliente_id);
+        }
+    }
+}
+
+/*-------------------------------------*/
+
+
 function actualizarResumen() {
     let totalPrestado = 0;
     let activos = 0;
@@ -190,12 +230,12 @@ function actualizarResumen() {
         const capitalPendiente = montoPrestado - capitalRecuperado;
 
         // ❌ NO contar finalizados
-        if (estado !== "FINALIZADO") {
+        if (estado !== "finalizado") {
             totalPrestado += Math.max(capitalPendiente, 0);
         }
 
-        if (estado === "AL_DIA") activos++;
-        if (estado === "ATRASADO") atrasados++;
+        if (estado === "al_dia") activos++;
+        if (estado === "atrasado") atrasados++;
     });
 
     animarNumero(totalPrestadoEl, totalPrestado, true);
@@ -317,7 +357,6 @@ function renderPagos() {
         if (estadoClase === "pagado") item.classList.add("estado-finalizado");
         else if (estadoClase === "activo") item.classList.add("estado-al-dia");
         else if (estadoClase === "atrasado") item.classList.add("estado-atrasado");
-        else if (estadoClase === "atrasado") item.classList.add("estado-sin-plan");
 
 item.innerHTML = `
   <!-- DESKTOP: columnas del grid -->
@@ -467,20 +506,51 @@ btnPagoTotal.addEventListener("click", () => {
 ========================================== */
 btnConfirmarPago.addEventListener("click", async () => {
     const pagar = parseInt(inputCuotasPagar.value);
-    const nuevas = (prestamoActual.cuotas_pagadas || 0) + pagar;
+    const nuevasCuotasPagadas = (prestamoActual.cuotas_pagadas || 0) + pagar;
 
+    // --- LÓGICA DE ESTADO REAL ---
+    // Creamos un objeto temporal con las cuotas ya sumadas para calcular el estado
+    const prestamoSimulado = { 
+        ...prestamoActual, 
+        cuotas_pagadas: nuevasCuotasPagadas 
+    };
+    
+    // Calculamos si con este pago queda al día, sigue atrasado o finalizó
+    const nuevoEstado = calcularEstadoPrestamo(prestamoSimulado);
+    // ----------------------------
+
+    // 1. ACTUALIZAR PRÉSTAMO
     const { error } = await supabaseClient
         .from("prestamos")
-        .update({ cuotas_pagadas: nuevas })
+        .update({ 
+            cuotas_pagadas: nuevasCuotasPagadas,
+            estado_pago: nuevoEstado
+        })
         .eq("id", prestamoActual.id);
 
-    if (error) return alert("Error");
+    if (error) {
+        console.error(error);
+        return alert("Error al registrar pago");
+    }
 
-    alert("Pago realizado 💸");
+    // 2. ACTUALIZAR CLIENTE (Sincronizado)
+    await supabaseClient
+        .from("clientes")
+        .update({ estado: nuevoEstado })
+        .eq("id", prestamoActual.cliente_id);
 
+    // 3. Feedback
+    let mensaje = "Pago realizado 💸";
+    if (nuevoEstado === "finalizado") mensaje = "¡Préstamo Finalizado! 🏆";
+    if (nuevoEstado === "atrasado") mensaje = "Pago parcial recibido. El cliente sigue ATRASADO.";
+    
+    alert(mensaje);
+
+    // 4. Cerrar modal y recargar
     modalCobrarCuota.classList.remove("active");
-    cargarListaParaCobrar();
+    await cargarListaParaCobrar();
 });
+
 
 /* ==========================================
    PAGINACIÓN
@@ -572,60 +642,55 @@ function configurarCalculos() {
 formCobrarPago.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // 🔥 Convertimos los valores del display a número
-    const totalNum = parseFloat(
-        totalDevolverDisplay.textContent
-            .replace("$ ", "")
-            .replace(/\./g, "")
-            .replace(",", ".")
-    );
+    if (!clienteSeleccionado) return alert("Seleccioná un cliente");
 
-    const cuotaNum = parseFloat(
-        valorCuotaDisplay.textContent
-            .replace("$ ", "")
-            .replace(/\./g, "")
-            .replace(",", ".")
-    );
+    const totalNum = parseFloat(totalDevolverDisplay.textContent.replace(/[$. ]/g, '') || 0);
+    const cuotaNum = parseFloat(valorCuotaDisplay.textContent.replace(/[$. ]/g, '') || 0);
 
-    // 🔥 Validación básica
-    if (!totalNum || !cuotaNum) {
-        alert("Completa los datos correctamente");
-        return;
-    }
+    // --- AQUÍ ESTÁ EL CAMBIO CLAVE ---
+    // Creamos un objeto temporal para calcular el estado real inicial
+    const prestamoTemporal = {
+        fecha_inicio: fechaInicioInput.value,
+        cuotas: parseInt(cuotasPrestadoInput.value),
+        cuotas_pagadas: 0,
+        frecuencia_pago: frecuenciaPagoInput.value,
+        intervalo_pago: parseInt(intervaloPagoInput.value)
+    };
 
-    const { error: errorPrestamo } = await supabaseClient
+    const estadoInicial = calcularEstadoPrestamo(prestamoTemporal);
+    // ---------------------------------
+
+    // 1. Insertar préstamo con el estado calculado
+    const { data: dataPrestamo, error: errorPrestamo } = await supabaseClient
         .from('prestamos')
         .insert([{
             cliente_id: clienteSeleccionado.id,
             monto_prestado: parseFloat(montoPrestadoInput.value),
             interes_porcentaje: parseFloat(interesPrestadoInput.value),
-            cuotas: parseInt(cuotasPrestadoInput.value),
-
-            // 🔥 NUEVO
-            frecuencia_pago: frecuenciaPagoInput.value,
-            intervalo_pago: parseInt(intervaloPagoInput.value),
-
-            fecha_inicio: fechaInicioInput.value,
+            cuotas: prestamoTemporal.cuotas,
+            frecuencia_pago: prestamoTemporal.frecuencia_pago,
+            intervalo_pago: prestamoTemporal.intervalo_pago,
+            fecha_inicio: prestamoTemporal.fecha_inicio,
             fecha_fin: fechaFinInput.value,
             total_devolver: totalNum,
             valor_cuota: cuotaNum,
-            cuotas_pagadas: 0
-        }]);
+            cuotas_pagadas: 0,
+            estado_pago: estadoInicial // <-- Ya no es 'al_dia' fijo
+        }])
+        .select();
 
-    if (errorPrestamo) {
-        alert("Error: " + errorPrestamo.message);
-        return;
-    }
+    if (errorPrestamo) return console.error(errorPrestamo);
 
+    // 2. Actualizar cliente con el mismo estado calculado
     await supabaseClient
-        .from('clientes')
-        .update({ estado: 'Activo' })
-        .eq('id', clienteSeleccionado.id);
+        .from("clientes")
+        .update({ estado: estadoInicial }) // <-- Ya no es 'al_dia' fijo
+        .eq("id", clienteSeleccionado.id);
 
-    alert("Préstamo otorgado con éxito 💸");
-
+    alert("¡Préstamo otorgado!");
     modalCobrar.style.display = "none";
-    cargarListaParaCobrar();
+    formCobrarPago.reset();
+    await cargarListaParaCobrar();
 });
 
 function aplicarFiltros() {
@@ -668,6 +733,7 @@ inputBuscar.addEventListener("input", aplicarFiltros);
 selectEstadoFiltro.addEventListener("change", aplicarFiltros);
 inputMontoFiltro.addEventListener("input", aplicarFiltros);
 
+
 /* ==========================================
    CERRAR MODALES
 ========================================== */
@@ -695,3 +761,27 @@ window.addEventListener("resize", () => {
     paginaActual = 1;
     renderPagos();
 });
+
+async function sincronizarEstadoCliente(clienteId) {
+    // Traer el último préstamo de ese cliente
+    const { data, error } = await supabaseClient
+        .from("prestamos")
+        .select("estado_pago")
+        .eq("cliente_id", clienteId)
+        .order("id", { ascending: false })
+        .limit(1)
+        .single();
+
+    if (error || !data) return;
+
+    let nuevoEstado = "sin_prestamo";
+
+    // Corregir los valores para que coincidan con la restricción SQL
+    if (data.estado_pago === "al_dia") nuevoEstado = "al_dia"; 
+    if (data.estado_pago === "atrasado") nuevoEstado = "atrasado";
+    if (data.estado_pago === "finalizado") nuevoEstado = "finalizado";
+    await supabaseClient
+        .from("clientes")
+        .update({ estado: nuevoEstado })
+        .eq("id", clienteId);
+}
