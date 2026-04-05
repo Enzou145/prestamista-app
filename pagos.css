@@ -1514,7 +1514,7 @@ background-color: rgba(255,255,255,0.1);}
   .stat-box {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.07);
@@ -1666,9 +1666,9 @@ background-color: rgba(255,255,255,0.1);}
     font-size: 0.8rem !important;
     border-radius: 8px !important;
     white-space: nowrap;
-    background: #00bbd41f !important;
-    color: #00bcd4 !important;
-    border: 1px solid #00bcd4 !important;
+    background: #0063d427 !important;
+    color: #0063d4 !important;
+    border: 1px solid #0063d4 !important;
     font-weight: 700 !important;
     letter-spacing: 0.3px;
   }
@@ -1733,13 +1733,13 @@ background-color: rgba(255,255,255,0.1);}
   .avatar-icon {
     width: 32px;
     height: 32px;
-    background: #00bbd415;
+    background: #0063d41c;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    border: 0.5px solid #00bbd469;
+    border: 0.5px solid #0063d486;
   }
 
   .card-nombre strong {
@@ -1765,9 +1765,9 @@ background-color: rgba(255,255,255,0.1);}
   }
 
   .estado.activo {
-    background: rgba(0,188,212,0.12) !important;
-    color: #00bcd4 !important;
-    border: 1px solid rgba(0,188,212,0.25) !important;
+    background: rgba(0, 212, 53, 0.12) !important;
+    color: #00d42ed5 !important;
+    border: 1px solid rgba(0, 212, 35, 0.637) !important;
   }
 
   .estado.atrasado {
@@ -1778,14 +1778,14 @@ background-color: rgba(255,255,255,0.1);}
 
   .estado.pagado {
     background: rgba(255,255,255,0.05) !important;
-    color: #546e8a !important;
-    border: 1px solid rgba(255,255,255,0.08) !important;
+    color: rgba(255, 255, 255, 0.507) !important;
+    border: 1px solid rgba(255, 255, 255, 0.267) !important;
   }
 
   .estado.sinplan {
-    background: rgba(255,140,0,0.1) !important;
-    color: #ff8c00 !important;
-    border: 1px solid rgba(255,140,0,0.22) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #fffffe !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
   }
 
   /* MONTOS */
@@ -1891,7 +1891,7 @@ background-color: rgba(255,255,255,0.1);}
   }
 
   .btn-cobrar {
-    background: linear-gradient(135deg, #00bcd4 , #078b9c ) !important;
+    background: linear-gradient(135deg, #0077ff , #0063d4 ) !important;
     color: #ffffff !important;
     border: none !important;
     border-radius: 8px !important;
@@ -1903,14 +1903,14 @@ background-color: rgba(255,255,255,0.1);}
     flex-shrink: 0;
     width: auto !important;
     height: 32px;
-    box-shadow: 0 1px 7px #00bbd46e ;
+    box-shadow: 0 1px 5px #0063d4c0 ;
     letter-spacing: 0.4px;
     text-transform: uppercase;
     transition: all 0.2s ease;
   }
 
   .btn-cobrar:hover {
-    background: linear-gradient(135deg, #ff8c00, #ffa733) !important;
+    background: linear-gradient(135deg,  #0077ff , #197bec ) !important;
     box-shadow: 0 4px 18px rgba(255,140,0,0.45) !important;
   }
 
@@ -1955,7 +1955,7 @@ background-color: rgba(255,255,255,0.1);}
     display: block;
     width: 22px;
     height: 2px;
-    background: #00bcd4;
+    background: #0063d4;
     border-radius: 2px;
     transition: all 0.3s ease;
   }
@@ -1984,13 +1984,15 @@ background-color: rgba(255,255,255,0.1);}
 }
 
 /* ====== BORDES DE ESTADO POR CARD ====== */
-.item-cliente.estado-finalizado { border-top: 2px solid #ff8c00 !important; }
-.item-cliente.estado-al-dia     { border-top: 2px solid #00bcd4 !important; }
+.item-cliente.estado-finalizado { border-top: 2px solid #00bd29d5!important; }
+.item-cliente.estado-al-dia     { border-top: 2px solid #0063d4!important; }
 .item-cliente.estado-atrasado   { border-top: 2px solid #ff5252 !important; }
+.item-cliente.estado-sin-plan   { border-top: 2px solid #ffffff !important; }
 
-.item-cliente.estado-finalizado .barra-cuotas-fill { background: linear-gradient(90deg, #e65c00, #ff8c00) !important; }
-.item-cliente.estado-al-dia     .barra-cuotas-fill { background: linear-gradient(90deg, #0097a7, #00bcd4) !important; }
+.item-cliente.estado-finalizado .barra-cuotas-fill { background: linear-gradient(90deg,  #00bd29d5,#00ff37d5) !important; }
+.item-cliente.estado-al-dia     .barra-cuotas-fill { background: linear-gradient(90deg, #0063d4 , #0077ff) !important; }
 .item-cliente.estado-atrasado   .barra-cuotas-fill { background: linear-gradient(90deg, #d32f2f, #ff5252) !important; }
+
 
 .item-cliente.estado-finalizado .btn-cobrar { display: none !important; }
 

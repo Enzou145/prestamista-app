@@ -317,6 +317,7 @@ function renderPagos() {
         if (estadoClase === "pagado") item.classList.add("estado-finalizado");
         else if (estadoClase === "activo") item.classList.add("estado-al-dia");
         else if (estadoClase === "atrasado") item.classList.add("estado-atrasado");
+        else if (estadoClase === "atrasado") item.classList.add("estado-sin-plan");
 
 item.innerHTML = `
   <!-- DESKTOP: columnas del grid -->
