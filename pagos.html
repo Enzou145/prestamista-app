@@ -144,11 +144,11 @@
 
     <div class="filtros-container" id="filtrosContainer">
         <select id="filtroEstado">
-            <option value="todos">Todos</option>
-            <option value="SIN_PLAN">Sin plan</option>
-            <option value="AL_DIA">Al día</option>
-            <option value="ATRASADO">Atrasado</option>
-            <option value="FINALIZADO">Finalizado</option>
+        <option value="todos">Todos</option>
+        <option value="sin_prestamo">Sin plan</option>
+        <option value="al_dia">Al día</option>
+        <option value="atrasado">Atrasado</option>
+        <option value="finalizado">Finalizado</option>
         </select>
         <input type="number" id="filtroMonto" placeholder="Monto mayor a..." />
         <button class="btn-secundario">Exportar</button>
@@ -303,10 +303,15 @@
       </div>
 
       <!-- PAGAR CUOTAS -->
-      <div class="campo-pago">
+      <!-- DESPUÉS -->
+        <div class="campo-pago">
         <label>CANTIDAD DE CUOTAS A PAGAR</label>
-        <input type="number" id="inputCuotasPagar" min="1" value="1">
-      </div>
+        <div class="stepper-cuotas">
+            <button type="button" class="stepper-btn" id="btnMenos">−</button>
+            <input type="number" id="inputCuotasPagar" min="1" value="1">
+            <button type="button" class="stepper-btn" id="btnMas">+</button>
+        </div>
+        </div>
 
       <div class="campo-pago">
         <label>TOTAL A PAGAR</label>
@@ -348,11 +353,3 @@
 </body>
 </html>
 
-<!--Lógica de la columna “Acciones”
-Estado = Sin préstamo → botón: Asignar préstamo
-Abre modal para asignar el préstamo (campos: monto, interés, cuotas, fechas, total a devolver calculado, valor de cada cuota).
-Estado = Activo → botón: Cobrar cuota
-Abre modal de cobro de cuota: muestra monto de la cuota y fecha.
-Al pagar: se actualiza Cuotas Pagadas, Estado (si completa todas las cuotas → “Finalizado”).
-Estado = Finalizado → sin botones
-Ya no hay acción disponible, solo visualizar.-->

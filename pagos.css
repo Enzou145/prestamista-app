@@ -681,7 +681,8 @@ text-decoration: none;}
 }
 
 .btn-guardar-pago {
-    background-color: #0ea5e9; /* Azul cielo de la imagen */
+    background: linear-gradient(135deg, #0077ff , #0063d4 ) !important;
+    box-shadow: 0 1px 5px #0063d481 ;
     color: #0f172a; /* Texto oscuro para contraste */
     padding: 0.8rem 2rem;
     border-radius: 12px;
@@ -1765,9 +1766,9 @@ background-color: rgba(255,255,255,0.1);}
   }
 
   .estado.activo {
-    background: rgba(0, 212, 53, 0.12) !important;
-    color: #00d42ed5 !important;
-    border: 1px solid rgba(0, 212, 35, 0.637) !important;
+    background: rgba(59, 130, 246, 0.15);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.3);
   }
 
   .estado.atrasado {
@@ -1777,15 +1778,15 @@ background-color: rgba(255,255,255,0.1);}
   }
 
   .estado.pagado {
-    background: rgba(255,255,255,0.05) !important;
-    color: rgba(255, 255, 255, 0.507) !important;
-    border: 1px solid rgba(255, 255, 255, 0.267) !important;
+    background: rgba(34, 197, 94, 0.15);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.3);
   }
 
   .estado.sinplan {
-    background: rgba(255, 255, 255, 0.1) !important;
-    color: #fffffe !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    background: rgba(245, 158, 11, 0.15) !important;
+    color: #fbbf24 !important;
+    border: 1px solid rgba(245, 158, 11, 0.3) !important;
   }
 
   /* MONTOS */
@@ -1892,6 +1893,7 @@ background-color: rgba(255,255,255,0.1);}
 
   .btn-cobrar {
     background: linear-gradient(135deg, #0077ff , #0063d4 ) !important;
+    box-shadow: 0 1px 5px #0063d4c0 ;
     color: #ffffff !important;
     border: none !important;
     border-radius: 8px !important;
@@ -1903,7 +1905,6 @@ background-color: rgba(255,255,255,0.1);}
     flex-shrink: 0;
     width: auto !important;
     height: 32px;
-    box-shadow: 0 1px 5px #0063d4c0 ;
     letter-spacing: 0.4px;
     text-transform: uppercase;
     transition: all 0.2s ease;
@@ -1930,7 +1931,7 @@ background-color: rgba(255,255,255,0.1);}
     box-shadow: 0 20px 60px rgba(0,0,0,0.55) !important;
   }
 
-  .modal-header-pago h2 { font-size: 1.1rem !important; color: #ffffff !important; }
+  .modal-header-pago h2 { font-size: 1.4rem !important; color: #ffffff; font-weight: 700 !important; }
   .fila-pago { flex-direction: column !important; gap: 12px !important; }
   .grupo-flex { flex-direction: column !important; gap: 12px !important; }
   .acciones-modal-pago { flex-direction: column !important; gap: 10px !important; }
@@ -1981,18 +1982,314 @@ background-color: rgba(255,255,255,0.1);}
   }
 
   .sidebar-overlay.open { display: block; }
+
+
+/* ============================
+   MODAL COBRAR CUOTA - REDISEÑO
+   ============================ */
+
+#modalCobrarCuota .modal-pago {
+  background: linear-gradient(160deg, #1a2035 0%, #1e2540 100%) !important;
+  border: 1px solid rgba(0, 119, 255, 0.18) !important;
+  border-radius: 20px !important;
+  padding: 24px !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6) !important;
 }
+
+/* HEADER */
+#modalCobrarCuota .modal-header-pago {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+#modalCobrarCuota .modal-header-pago h2 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+  letter-spacing: 0.1px;
+  
+}
+
+#modalCobrarCuota #infoClienteModal {
+  font-size: 0.78rem;
+  color: #4da6ff;
+  margin: 0;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+#modalCobrarCuota .cerrar-modal {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #7a96b0;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+#modalCobrarCuota .cerrar-modal:hover {
+  background: rgba(255, 82, 82, 0.15);
+  border-color: rgba(255, 82, 82, 0.3);
+  color: #ff5252;
+}
+
+/* GRID DE STATS (Monto, Total, Cuota, Progreso) */
+#modalCobrarCuota .cliente-resumen {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  margin-bottom: 16px !important;
+}
+
+#modalCobrarCuota .item-resumen-pago {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+#modalCobrarCuota .item-resumen-pago small {
+  font-size: 0.57rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #546e8a;
+  font-weight: 700;
+}
+
+#modalCobrarCuota .item-resumen-pago strong {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.2px;
+}
+
+/* BARRA DE PROGRESO */
+#modalCobrarCuota .barra-progreso {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+#modalCobrarCuota .progreso {
+  height: 100%;
+  background: linear-gradient(90deg, #0051ff, #0099ff);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+/* SEPARADOR */
+#modalCobrarCuota .form-pago::before {
+  content: '';
+  display: block;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin-bottom: 20px;
+}
+
+/* LABELS */
+#modalCobrarCuota .campo-pago label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #546e8a;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* STEPPER - Cantidad de cuotas */
+#modalCobrarCuota .campo-pago:has(#inputCuotasPagar) {
+  margin-bottom: 16px;
+}
+
+#modalCobrarCuota #inputCuotasPagar {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(0, 119, 255, 0.25);
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 13px 16px;
+  text-align: center;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+  -moz-appearance: textfield;
+}
+
+#modalCobrarCuota #inputCuotasPagar::-webkit-inner-spin-button,
+#modalCobrarCuota #inputCuotasPagar::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#modalCobrarCuota #inputCuotasPagar:focus {
+  border-color: rgba(0, 119, 255, 0.55);
+  background: rgba(0, 119, 255, 0.05);
+}
+
+/* TOTAL A PAGAR - destacado */
+#modalCobrarCuota #totalPagarDisplay {
+  width: 100%;
+  background: rgba(0, 119, 255, 0.07);
+  border: 1px solid rgba(0, 119, 255, 0.3);
+  border-left: 3px solid #0077ff;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  padding: 14px 16px;
+  outline: none;
+  box-sizing: border-box;
+  letter-spacing: -0.3px;
+  cursor: default;
+}
+
+/* ACCIONES */
+#modalCobrarCuota .acciones-modal-pago {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Botón "Pagar todo" */
+#modalCobrarCuota #btnPagoTotal {
+  width: 100%;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #7a96b0;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: all 0.2s ease;
+}
+
+#modalCobrarCuota #btnPagoTotal:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #cfd8e3;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Botón "Confirmar pago" */
+#modalCobrarCuota #btnConfirmarPago {
+  width: 100%;
+  background: linear-gradient(135deg, #0077ff, #0063d4);
+  border: none;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 20px rgba(0, 99, 212, 0.45);
+  transition: all 0.2s ease;
+}
+
+#modalCobrarCuota #btnConfirmarPago:hover {
+  background: linear-gradient(135deg, #1a8aff, #0077ff);
+  box-shadow: 0 6px 28px rgba(0, 119, 255, 0.55);
+  transform: translateY(-1px);
+}
+
+
+
+
+
+
+
+
+
+
+/* STEPPER CUOTAS */
+#modalCobrarCuota .stepper-cuotas {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(0, 119, 255, 0.25);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#modalCobrarCuota .stepper-btn {
+  background: transparent;
+  border: none;
+  color: #4da6ff;
+  font-size: 1.4rem;
+  font-weight: 700;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+  line-height: 1;
+}
+
+#modalCobrarCuota .stepper-btn:hover {
+  background: rgba(0, 119, 255, 0.1);
+}
+
+#modalCobrarCuota .stepper-btn:active {
+  background: rgba(0, 119, 255, 0.2);
+}
+
+#modalCobrarCuota #inputCuotasPagar {
+  flex: 1;
+  background: transparent !important;
+  border: none !important;
+  border-left: 1px solid rgba(0, 119, 255, 0.15) !important;
+  border-right: 1px solid rgba(0, 119, 255, 0.15) !important;
+  border-radius: 0 !important;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 13px 8px;
+  text-align: center;
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+
+
+}
+
+
 
 /* ====== BORDES DE ESTADO POR CARD ====== */
 .item-cliente.estado-finalizado { border-top: 2px solid #00bd29d5!important; }
 .item-cliente.estado-al-dia     { border-top: 2px solid #0063d4!important; }
 .item-cliente.estado-atrasado   { border-top: 2px solid #ff5252 !important; }
-.item-cliente.estado-sin-plan   { border-top: 2px solid #ffffff !important; }
+.item-cliente.estado-sin_prestamo   { border-top: 2px solid #c9bc07 !important; }
 
 .item-cliente.estado-finalizado .barra-cuotas-fill { background: linear-gradient(90deg,  #00bd29d5,#00ff37d5) !important; }
 .item-cliente.estado-al-dia     .barra-cuotas-fill { background: linear-gradient(90deg, #0063d4 , #0077ff) !important; }
 .item-cliente.estado-atrasado   .barra-cuotas-fill { background: linear-gradient(90deg, #d32f2f, #ff5252) !important; }
-
+.item-cliente.estado-sin_prestamo   .barra-cuotas-fill { background: linear-gradient(90deg, #f3c809, #cbff52) !important; }
 
 .item-cliente.estado-finalizado .btn-cobrar { display: none !important; }
 
@@ -2109,8 +2406,31 @@ background-color: rgba(255,255,255,0.1);}
   .acciones.desktop-btn .btn-cobrar:hover {
     background: #2563eb;
   }
+
+  /* CONTENEDOR OSCURO (fondo) */
+#modalCobrar {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
 }
 
+/* CAJA DEL MODAL */
+#modalCobrar .modal-content {
+    width: 95%;
+    max-width: 420px; /* 🔥 CLAVE: limita el ancho */
+    max-height: 90vh; /* 🔥 evita que se salga verticalmente */
+    
+    overflow-y: auto; /* scroll SOLO dentro del modal */
+    
+    border-radius: 16px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+}
 
 
 

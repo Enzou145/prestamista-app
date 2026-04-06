@@ -357,6 +357,7 @@ function renderPagos() {
         if (estadoClase === "pagado") item.classList.add("estado-finalizado");
         else if (estadoClase === "activo") item.classList.add("estado-al-dia");
         else if (estadoClase === "atrasado") item.classList.add("estado-atrasado");
+        else if (estadoClase === "sin-prestamo") item.classList.add("estado-sin_prestamo");
 
 item.innerHTML = `
   <!-- DESKTOP: columnas del grid -->
@@ -478,6 +479,23 @@ function abrirModalCobro(cliente, prestamo) {
     modalCobrarCuota.classList.add("active");
 }
 
+document.getElementById('btnMenos').addEventListener('click', () => {
+  const input = document.getElementById('inputCuotasPagar');
+  if (parseInt(input.value) > 1) {
+    input.value = parseInt(input.value) - 1;
+    input.dispatchEvent(new Event('input'));
+  }
+});
+
+document.getElementById('btnMas').addEventListener('click', () => {
+  const input = document.getElementById('inputCuotasPagar');
+  const max = parseInt(input.max) || Infinity;
+  if (parseInt(input.value) < max) {
+    input.value = parseInt(input.value) + 1;
+    input.dispatchEvent(new Event('input'));
+  }
+});
+
 /* ==========================================
    CALCULAR TOTAL DINÁMICO
 ========================================== */
@@ -583,7 +601,11 @@ function prepararCobro(cliente) {
     nombreClientePrestamo.value = `${cliente.nombre} ${cliente.apellido}`;
     fechaInicioInput.value = new Date().toISOString().split('T')[0];
 
-    modalCobrar.style.display = "flex";
+        modalCobrar.style.display = "flex";
+
+    // 🔥 BLOQUEAR SCROLL
+    document.body.style.overflow = "hidden";
+    
 }
 
 /* ==========================================
@@ -737,8 +759,15 @@ inputMontoFiltro.addEventListener("input", aplicarFiltros);
 /* ==========================================
    CERRAR MODALES
 ========================================== */
-document.getElementById("cerrarModalCobrar").onclick = () => modalCobrar.style.display = "none";
-document.getElementById("cancelarModalCobrar").onclick = () => modalCobrar.style.display = "none";
+document.getElementById("cerrarModalCobrar").onclick = () => {
+    modalCobrar.style.display = "none";
+    document.body.style.overflow = "auto"; // 🔥 RESTAURA
+};
+
+document.getElementById("cancelarModalCobrar").onclick = () => {
+    modalCobrar.style.display = "none";
+    document.body.style.overflow = "auto"; // 🔥 RESTAURA
+};
 
 cerrarModalCuota.onclick = () => modalCobrarCuota.classList.remove("active");
 
