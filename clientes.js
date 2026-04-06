@@ -179,16 +179,16 @@ function actualizarPaginacion() {
 
 }
 
-// Ejemplo para abrir:
-function abrirModal() {
-    document.getElementById('modalNuevoCliente').classList.add('active'); // O como lo manejes
-    document.body.classList.add('modal-open'); // BLOQUEA SCROLL FONDO
+function abrirModal(modal) {
+    if (!modal) return;
+    modal.classList.add("active");
+    document.body.classList.add("modal-open");
 }
 
-// Ejemplo para cerrar:
-function cerrarModal() {
-    document.getElementById('modalNuevoCliente').classList.remove('active');
-    document.body.classList.remove('modal-open'); // ACTIVA SCROLL FONDO
+function cerrarModal(modal) {
+    if (!modal) return;
+    modal.classList.remove("active");
+    document.body.classList.remove("modal-open");
 }
 
 function crearFilaCliente(cliente) {
