@@ -324,7 +324,19 @@ function crearFilaCliente(cliente) {
     });
 
     return fila;
-}window.addEventListener("resize", () => cargarClientes());
+}
+
+let lastWidthClientes = window.innerWidth;
+
+window.addEventListener("resize", () => {
+    // Si el ancho no cambió (ej: solo cambió el alto por el scroll), no hagas nada
+    if (window.innerWidth === lastWidthClientes) return;
+    
+    // Si el ancho realmente cambió, actualizamos y renderizamos
+    lastWidthClientes = window.innerWidth;
+    paginaActual = 1; 
+    renderClientes(); 
+});
 
 async function cargarClientes() {
     // 1. Consultas a Supabase
@@ -615,3 +627,8 @@ if (menuToggle && sidebar) {
         sidebarOverlay.classList.remove("active");
     });
 }
+
+document.getElementById('sidebarCloseBtn')?.addEventListener('click', () => {
+    document.querySelector('.sidebar').classList.remove('active');
+    document.getElementById('sidebarOverlay').classList.remove('active');
+});

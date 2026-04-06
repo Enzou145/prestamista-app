@@ -302,7 +302,7 @@ function renderPagos() {
         const prestamo = cliente.prestamos?.slice(-1)[0] || null;
 
         let cuotasTexto = "-";
-        let estadoTexto = "Sin plan";
+        let estadoTexto = "Sin Prestamo";
         let estadoClase = "sinplan";
         let fechaVenceTexto = "-";
 
@@ -357,8 +357,7 @@ function renderPagos() {
         if (estadoClase === "pagado") item.classList.add("estado-finalizado");
         else if (estadoClase === "activo") item.classList.add("estado-al-dia");
         else if (estadoClase === "atrasado") item.classList.add("estado-atrasado");
-        else if (estadoClase === "sin-prestamo") item.classList.add("estado-sin_prestamo");
-
+        else if (estadoClase === "sinplan") item.classList.add("estado-sin_prestamo");
 item.innerHTML = `
   <!-- DESKTOP: columnas del grid -->
   <span class="nombre">${cliente.nombre}</span>
@@ -772,24 +771,27 @@ document.getElementById("cancelarModalCobrar").onclick = () => {
 cerrarModalCuota.onclick = () => modalCobrarCuota.classList.remove("active");
 
 // ====== HAMBURGUESA ======
-const hamburgerBtn = document.getElementById("hamburgerBtn");
-const sidebar = document.querySelector(".sidebar");
-const sidebarOverlay = document.getElementById("sidebarOverlay");
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const sidebar = document.getElementById('sidebar');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
 
-hamburgerBtn?.addEventListener("click", () => {
-    sidebar.classList.toggle("open");
-    sidebarOverlay.classList.toggle("open");
-});
 
-sidebarOverlay?.addEventListener("click", () => {
-    sidebar.classList.remove("open");
-    sidebarOverlay.classList.remove("open");
-});
 
-window.addEventListener("resize", () => {
-    paginaActual = 1;
-    renderPagos();
-});
+function openSidebar() {
+    sidebar.classList.add('open');
+    sidebarOverlay.classList.add('open');
+}
+
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    sidebarOverlay.classList.remove('open');
+}
+
+hamburgerBtn?.addEventListener('click', openSidebar);
+sidebarCloseBtn?.addEventListener('click', closeSidebar);
+sidebarOverlay?.addEventListener('click', closeSidebar);
+
 
 async function sincronizarEstadoCliente(clienteId) {
     // Traer el último préstamo de ese cliente
@@ -814,3 +816,40 @@ async function sincronizarEstadoCliente(clienteId) {
         .update({ estado: nuevoEstado })
         .eq("id", clienteId);
 }
+
+// Stepper buttons - Modal Otorgar Préstamo
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.stepper-btn-p');
+  if (!btn) return;
+  
+  const targetId = btn.dataset.target;
+  const action = btn.dataset.action;
+  const input = document.getElementById(targetId);
+  if (!input) return;
+  
+  const min = parseFloat(input.min) || 0;
+  let val = parseFloat(input.value) || 0;
+  
+  if (action === 'plus') {
+    val += 1;
+  } else if (action === 'minus') {
+    val = Math.max(min, val - 1);
+  }
+  
+  input.value = val;
+  // Disparar evento para recalcular campos calculados
+  input.dispatchEvent(new Event('input'));
+});
+
+
+let lastWidth = window.innerWidth;
+
+window.addEventListener("resize", () => {
+    // Si el ancho sigue siendo el mismo, no hagas nada (evita el bug del scroll)
+    if (window.innerWidth === lastWidth) return;
+    
+    // Si el ancho realmente cambió (ej. giró el celu), ahí sí actualiza
+    lastWidth = window.innerWidth;
+    paginaActual = 1;
+    renderPagos();
+});

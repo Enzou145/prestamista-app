@@ -49,7 +49,7 @@ async function verificarSesionActiva() {
     }
 
     localStorage.setItem("usuarioLogueado", JSON.stringify(perfil));
-    window.location.href = "panel.html";
+    window.location.href = "clientes.html";
 }
 
 formLogin.addEventListener("submit", async (e) => {
@@ -99,7 +99,7 @@ formLogin.addEventListener("submit", async (e) => {
     }
 
     localStorage.setItem("usuarioLogueado", JSON.stringify(perfil));
-    window.location.href = "panel.html";
+    window.location.href = "clientes.html";
 });
 
 document.addEventListener("DOMContentLoaded", async () => {
