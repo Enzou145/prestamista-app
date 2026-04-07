@@ -755,6 +755,20 @@ background-color: #16223a;}
     color: #fff;
 }
 
+.btn-guardar-crear {
+    background: linear-gradient(135deg, #0077ff , #0063d4 ) !important;
+    box-shadow: 0 1px 5px #0063d4c0 ;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    height: 44px;
+    padding: 0 22px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    width: 100%;
+}
+
 .btn-eliminar-modal {
     background: #ff2d2d;
     color: #fff;
@@ -1220,6 +1234,7 @@ background-color: rgba(255,255,255,0.1);}
 
     .topbar h1 {
         font-size: 22px;
+        color: #fff;
     }
 
     .menu-toggle {
@@ -1228,7 +1243,7 @@ background-color: rgba(255,255,255,0.1);}
         justify-content: center;
         background: transparent;
         border: none;
-        color: white;
+        color:#0063d4;
         cursor: pointer;
         padding: 6px;
         flex-shrink: 0;

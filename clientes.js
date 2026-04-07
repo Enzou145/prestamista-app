@@ -54,7 +54,7 @@ if (logoutBtn) logoutBtn.addEventListener("click", () => logoutModal.classList.a
 if (cancelLogoutBtn) cancelLogoutBtn.addEventListener("click", () => logoutModal.classList.remove("active"));
 if (confirmLogoutBtn) confirmLogoutBtn.addEventListener("click", async () => {
     await supabaseClient.auth.signOut();
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 });
 
 /* =========================

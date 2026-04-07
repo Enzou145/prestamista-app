@@ -5,7 +5,7 @@
 }
 
 :root{
---principal: #0f172a;
+--principal:#0f172a;
 --panel:#0a1120;
 --hover:#3b82f6;
 --letrablanca: #ffffff;
@@ -905,6 +905,7 @@ background-color: rgba(255,255,255,0.1);}
     html, body {
     width: 100%;
     overflow-x: hidden;
+    background-color: #0f172a;
 }
 
 
@@ -1475,7 +1476,7 @@ background-color: rgba(255,255,255,0.1);}
     min-height: 100vh;
     overflow-y: auto !important;
     width: 100%;
-    background: linear-gradient(160deg, #1a2035 0%, #1e2540 100%);
+    background: linear-gradient( #0f172a 0%,#0f172a 100%);
   }
 
   /* ====== TOPBAR ====== */
@@ -1571,7 +1572,7 @@ background-color: rgba(255,255,255,0.1);}
     max-height: none !important;
     height: auto !important;
     overflow: visible !important;
-    background-color: transparent;
+    background-color: #0f172a; /*AQUI EL COLOR DE LA TABLA CAPOO*/
     border: none;
   }
 
@@ -1593,6 +1594,7 @@ background-color: rgba(255,255,255,0.1);}
     gap: 10px !important;
     position: relative;
     margin-bottom: 12px;
+    background-color: transparent !important;
   }
 
   .encabezado .info-izq h1 {
@@ -2233,7 +2235,7 @@ background-color: rgba(255,255,255,0.1);}
     display: block;
     width: 22px;
     height: 2px;
-    background: #0063d4;
+    background:#0063d4;
     border-radius: 2px;
     transition: all 0.3s ease;
   }
