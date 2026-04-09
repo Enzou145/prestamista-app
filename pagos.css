@@ -1489,7 +1489,7 @@ background-color: rgba(255,255,255,0.1);}
     display: flex !important;
     align-items: center !important;
     min-height: 0 !important;
-    background: rgba(20, 26, 48, 0.98) !important;
+    background: #0a1120 !important;
     border-bottom: 1px solid #0077ff31 !important;
     backdrop-filter: blur(12px);
   }

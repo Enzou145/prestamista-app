@@ -632,3 +632,47 @@ document.getElementById('sidebarCloseBtn')?.addEventListener('click', () => {
     document.querySelector('.sidebar').classList.remove('active');
     document.getElementById('sidebarOverlay').classList.remove('active');
 });
+
+
+
+
+
+// Busca el botón (puedes agregarlo al final del archivo)
+const btnGuardarCrear = document.querySelector(".btn-guardar-crear");
+
+btnGuardarCrear.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    // 1. Recolectamos los datos (igual que en tu form normal)
+    const nuevoCliente = {
+        nombre: nuevoNombreCliente.value.trim(),
+        apellido: nuevoApellidoCliente.value.trim(),
+        dni: nuevoDniCliente.value.trim(),
+        telefono: nuevoTelCliente.value.trim(),
+        ciudad: nuevoCiudad.value.trim(),
+        barrio: nuevoBarrio.value.trim(),
+        calle: nuevoCalle.value.trim(),
+        nro_calle: nuevoNro.value.trim(),
+        ocupacion: nuevoOcupacionCliente.value.trim(),
+        estado: "sin_prestamo",
+        sena: nuevoSenaCliente.value.trim(),
+        monto_inicial: parseFloat(nuevoMontoCliente.value) || 0
+    };
+
+    // 2. Guardamos en Supabase y pedimos que nos devuelva el ID
+    const { data, error } = await supabaseClient
+        .from("clientes")
+        .insert(nuevoCliente)
+        .select() // Esto es clave para obtener el ID
+        .single();
+
+    if (error) {
+        mostrarToast("Error al guardar: " + error.message, "error");
+    } else {
+        // 3. ¡LA MAGIA! Guardamos el ID en la memoria del navegador
+        localStorage.setItem("abrir_prestamo_id", data.id);
+        
+        // 4. Redirigimos a la sección de pagos
+        window.location.href = "pagos.html";
+    }
+});

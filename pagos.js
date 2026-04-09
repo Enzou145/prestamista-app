@@ -132,12 +132,25 @@ async function cargarListaParaCobrar() {
     clientesGlobal = data;
     clientesFiltrados = data;
 
-    actualizarResumen(); // 🔥 ESTA LÍNEA NUEVA
-
+    actualizarResumen();
     paginaActual = 1;
     renderPagos();
 
-
+    // === AGREGAR ESTO AQUÍ (Al final de la función) ===
+    const idParaAbrir = localStorage.getItem("abrir_prestamo_id");
+    
+    if (idParaAbrir) {
+        // Buscamos al cliente en los datos que acabamos de traer
+        const clienteEncontrado = clientesGlobal.find(c => c.id == idParaAbrir);
+        
+        if (clienteEncontrado) {
+            // Usamos tu función existente para abrir el modal de préstamo
+            prepararCobro(clienteEncontrado);
+        }
+        
+        // Limpiamos la memoria para que no se abra de nuevo al recargar
+        localStorage.removeItem("abrir_prestamo_id");
+    }
 }
 
 /*-------------------------------------*/
