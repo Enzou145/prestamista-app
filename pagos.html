@@ -183,7 +183,7 @@
 
     <div id="toast" class="toast"></div>
 
-<div class="modal-overlay" id="modalCobrar">
+<div class="modal-overlay hidden" id="modalCobrar">
   <!-- REEMPLAZA EL CONTENIDO DE <div id="modalCobrar"> -->
 <div class="modal-pago">
     <div class="modal-header-pago">
@@ -279,7 +279,7 @@
 </div>
 
 <!------------------------------------------>
-<div class="modal-overlay" id="modalCobrarCuota">
+<div class="modal-overlay hidden" id="modalCobrarCuota">
   <div class="modal-pago">
 
     <!-- HEADER -->
@@ -363,6 +363,106 @@
     </div>
 </div>
 
+
+<!-- Modal Detalles de Préstamo -->
+<!-- Modal Detalle del Préstamo -->
+<div id="modal-detalle-prestamo" class="modal-overlay hidden">
+  <div class="modal-content-detalle">
+
+    <!-- HEADER -->
+    <div class="modal-header-detalle">
+      <div>
+        <h2 class="det-titulo">Detalle del Préstamo</h2>
+        <div class="det-cliente-inline">
+          <span id="det-cliente-nombre" class="det-nombre-azul">Hoyos Santiago</span>
+          <span id="det-estado-badge" class="badge-estado finalizado">FINALIZADO</span>
+        </div>
+      </div>
+      <button id="close-detalle" class="btn-close-det">&times;</button>
+    </div>
+
+    <hr class="divisor-det">
+
+    <!-- DATOS DEL CLIENTE -->
+    <div class="det-seccion">
+      <h4 class="det-seccion-titulo">DATOS DEL CLIENTE</h4>
+      <div class="det-grid-2">
+        <div class="det-campo"><span>DNI:</span> <strong id="det-cliente-dni">42650610</strong></div>
+        <div class="det-campo"><span>Teléfono:</span> <strong id="det-cliente-tel">+54385...</strong></div>
+      </div>
+      <div class="det-grid-2">
+        <div class="det-campo"><span>Ciudad:</span> <strong id="det-cliente-ciudad">Sgo del Estero</strong></div>
+        <div class="det-campo"><span>Barrio:</span> <strong id="det-cliente-barrio">Huaico Hondo</strong></div>
+      </div>
+      <div class="det-grid-2">
+        <div class="det-campo"><span>Calle:</span> <strong id="det-cliente-calle">Falsa</strong></div>
+        <div class="det-campo"><span>Nro:</span> <strong id="det-cliente-nro">123</strong></div>
+      </div>
+      <div class="det-grid-1">
+        <div class="det-campo"><span>Ocupación:</span> <strong id="det-cliente-ocupacion">Contador de cuentos</strong></div>
+      </div>
+    </div>
+
+    <hr class="divisor-det">
+
+    <!-- RESUMEN DEL PRÉSTAMO -->
+    <div class="det-seccion">
+      <h4 class="det-seccion-titulo">RESUMEN DEL PRÉSTAMO</h4>
+      <div class="det-grid-2">
+        <div class="det-campo"><span>PRESTADO:</span> <strong id="det-monto-prestado">$10.000</strong></div>
+        <div class="det-campo"><span>A DEVOLVER:</span> <strong id="det-total-devolver">$12.000</strong></div>
+      </div>
+      <div class="det-grid-2">
+        <div class="det-campo"><span>INTERÉS:</span> <strong id="det-interes">20%</strong></div>
+        <div class="det-campo"><span>CUOTAS:</span> <strong id="det-cuotas-total">6</strong></div>
+      </div>
+      <div class="det-grid-2">
+        <div class="det-campo"><span>FRECUENCIA:</span> <strong id="det-frecuencia">Mensual</strong></div>
+        <div class="det-campo"><span>VALOR CUOTA:</span> <strong id="det-valor-cuota">$2.000</strong></div>
+      </div>
+      <div class="det-grid-2">
+        <div class="det-campo"><span>INICIO:</span> <strong id="det-fecha-inicio">01/03/2026</strong></div>
+        <div class="det-campo"><span>FIN:</span> <strong id="det-fecha-fin">05/04/2026</strong></div>
+      </div>
+
+      <!-- Barra de progreso -->
+      <div class="det-progreso-wrap">
+        <div class="det-progreso-barra">
+          <div id="det-progreso-fill" class="det-progreso-fill" style="width: 100%"></div>
+        </div>
+        <p id="det-progreso-texto" class="det-progreso-texto">6 DE 6 CUOTAS PAGADAS</p>
+      </div>
+    </div>
+
+    <hr class="divisor-det">
+
+    <!-- HISTORIAL DE CUOTAS -->
+    <div class="det-seccion">
+      <h4 class="det-seccion-titulo">HISTORIAL DE CUOTAS</h4>
+      <div id="lista-cuotas-detalle" class="det-cuotas-lista">
+        <!-- Se llena con JS. Ejemplo de una cuota: -->
+        <!--
+        <div class="det-cuota-item">
+          <div class="det-cuota-borde pagada"></div>
+          <div class="det-cuota-info">
+            <strong>Cuota 1</strong>
+            <span>01/03/2026</span>
+          </div>
+          <strong class="det-cuota-monto">$2.000</strong>
+          <span class="badge-cuota pagada">PAGADA</span>
+        </div>
+        -->
+      </div>
+    </div>
+
+    <!-- FOOTER BOTONES -->
+    <div class="det-footer-btns">
+      <button id="btn-registrar-pago-detalle" class="det-btn-primary">REGISTRAR PAGO</button>
+      <button id="btn-cerrar-detalle" class="det-btn-secondary">CERRAR</button>
+    </div>
+
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="pagos.js"></script>

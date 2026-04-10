@@ -54,6 +54,12 @@ const btnPagoTotal = document.getElementById("btnPagoTotal");
 let clienteSeleccionado = null;
 let prestamoActual = null;
 
+
+// Modal Detalles (Nuevos elementos)
+// Modal Detalles (Nuevos elementos)
+const modalDetallePrestamo = document.getElementById("modal-detalle-prestamo");
+const listaCuotasDetalle = document.getElementById("lista-cuotas-detalle");
+
 // PAGINACIÓN
 let clientesGlobal = [];
 let clientesFiltrados = [];
@@ -440,7 +446,7 @@ desktopBtn.innerHTML = !prestamo
 desktopBtn.addEventListener("click", () => {
     if (!prestamo) { prepararCobro(cliente); return; }
     if (esFinalizado) {
-        abrirModalCobro(cliente, prestamo); // o tu función para ver detalles
+        abrirModalDetalle(cliente, prestamo); // <-- CAMBIADO AQUÍ
         return;
     }
     abrirModalCobro(cliente, prestamo);
@@ -453,12 +459,13 @@ item.querySelectorAll(".mobile-btn").forEach(btn => {
     btn.addEventListener("click", () => {
         if (!prestamo) { prepararCobro(cliente); return; }
         if (prestamo.cuotas_pagadas >= prestamo.cuotas) {
-            abrirModalCobro(cliente, prestamo); // ver detalles en modo lectura
+            abrirModalDetalle(cliente, prestamo); // <-- CAMBIADO AQUÍ
             return;
         }
         abrirModalCobro(cliente, prestamo);
     });
 });
+
 listaPagos.appendChild(item);
     });
 
@@ -488,7 +495,7 @@ function abrirModalCobro(cliente, prestamo) {
 
     actualizarTotalPagar();
 
-    modalCobrarCuota.classList.add("active");
+    modalCobrarCuota.classList.remove("hidden"); // USA ESTO
 }
 
 document.getElementById('btnMenos').addEventListener('click', () => {
@@ -577,7 +584,7 @@ btnConfirmarPago.addEventListener("click", async () => {
     alert(mensaje);
 
     // 4. Cerrar modal y recargar
-    modalCobrarCuota.classList.remove("active");
+    modalCobrarCuota.classList.add("hidden"); // CERRAR AL TERMINAR
     await cargarListaParaCobrar();
 });
 
@@ -613,7 +620,7 @@ function prepararCobro(cliente) {
     nombreClientePrestamo.value = `${cliente.nombre} ${cliente.apellido}`;
     fechaInicioInput.value = new Date().toISOString().split('T')[0];
 
-        modalCobrar.style.display = "flex";
+    modalCobrar.classList.remove("hidden"); // USA ESTO en lugar de .style.display
 
     // 🔥 BLOQUEAR SCROLL
     document.body.style.overflow = "hidden";
@@ -722,7 +729,7 @@ formCobrarPago.addEventListener("submit", async (e) => {
         .eq("id", clienteSeleccionado.id);
 
     alert("¡Préstamo otorgado!");
-    modalCobrar.style.display = "none";
+    modalCobrar.classList.add("hidden"); // Agrega la clase para ocultar
     formCobrarPago.reset();
     await cargarListaParaCobrar();
 });
@@ -772,16 +779,17 @@ inputMontoFiltro.addEventListener("input", aplicarFiltros);
    CERRAR MODALES
 ========================================== */
 document.getElementById("cerrarModalCobrar").onclick = () => {
-    modalCobrar.style.display = "none";
+    modalCobrar.classList.add("hidden");
     document.body.style.overflow = "auto"; // 🔥 RESTAURA
 };
 
 document.getElementById("cancelarModalCobrar").onclick = () => {
-    modalCobrar.style.display = "none";
+    modalCobrar.classList.add("hidden");
     document.body.style.overflow = "auto"; // 🔥 RESTAURA
 };
 
-cerrarModalCuota.onclick = () => modalCobrarCuota.classList.remove("active");
+// CERRAR COBRAR CUOTA
+cerrarModalCuota.onclick = () => modalCobrarCuota.classList.add("hidden"); 
 
 // ====== HAMBURGUESA ======
 const hamburgerBtn = document.getElementById('hamburgerBtn');
@@ -866,3 +874,84 @@ window.addEventListener("resize", () => {
     paginaActual = 1;
     renderPagos();
 });
+
+
+
+function abrirModalDetalle(cliente, prestamo) {
+    modalCobrarCuota.classList.add("hidden");
+    modalCobrar.classList.add("hidden");
+
+    // CABECERA
+    document.getElementById("det-cliente-nombre").textContent = `${cliente.nombre} ${cliente.apellido}`;
+    
+    const badge = document.getElementById("det-estado-badge");
+    badge.textContent = "FINALIZADO";
+    badge.className = "badge-estado finalizado";
+
+    // DATOS DEL CLIENTE
+    document.getElementById("det-cliente-dni").textContent   = cliente.dni        || '-';
+    document.getElementById("det-cliente-tel").textContent   = cliente.telefono   || '-';
+    document.getElementById("det-cliente-ciudad").textContent = cliente.ciudad    || '-';
+    document.getElementById("det-cliente-barrio").textContent = cliente.barrio    || '-';
+    document.getElementById("det-cliente-calle").textContent  = cliente.calle     || '-';
+    document.getElementById("det-cliente-nro").textContent    = cliente.numero    || '-';
+    document.getElementById("det-cliente-ocupacion").textContent = cliente.ocupacion || '-';
+
+    // RESUMEN DEL PRÉSTAMO
+    document.getElementById("det-monto-prestado").textContent = `$${prestamo.monto_prestado.toLocaleString('es-AR')}`;
+    document.getElementById("det-total-devolver").textContent = `$${prestamo.total_devolver.toLocaleString('es-AR')}`;
+    document.getElementById("det-interes").textContent        = `${prestamo.interes_porcentaje}%`;
+    document.getElementById("det-cuotas-total").textContent   = prestamo.cuotas;
+    document.getElementById("det-frecuencia").textContent     = prestamo.frecuencia_pago === "mes" ? "Mensual" : prestamo.frecuencia_pago === "semana" ? "Semanal" : "Diaria";
+    document.getElementById("det-valor-cuota").textContent    = `$${prestamo.valor_cuota.toLocaleString('es-AR')}`;
+    document.getElementById("det-fecha-inicio").textContent   = new Date(prestamo.fecha_inicio + "T00:00:00").toLocaleDateString('es-AR');
+    document.getElementById("det-fecha-fin").textContent      = new Date(prestamo.fecha_fin + "T00:00:00").toLocaleDateString('es-AR');
+
+    // BARRA DE PROGRESO
+    const pagadas = prestamo.cuotas_pagadas || 0;
+    const total = prestamo.cuotas;
+    const pct = total > 0 ? (pagadas / total * 100) : 0;
+    document.getElementById("det-progreso-fill").style.width = pct + "%";
+    document.getElementById("det-progreso-texto").textContent = `${pagadas} DE ${total} CUOTAS PAGADAS`;
+
+    // HISTORIAL DE CUOTAS
+    listaCuotasDetalle.innerHTML = "";
+    let fechaAux = new Date(prestamo.fecha_inicio + "T00:00:00");
+    const intervalo = prestamo.intervalo_pago || 1;
+
+    for (let i = 1; i <= total; i++) {
+        const isPagada = i <= pagadas;
+        const div = document.createElement("div");
+        div.className = "det-cuota-item";
+        div.innerHTML = `
+            <div class="det-cuota-borde ${isPagada ? 'pagada' : 'pendiente'}"></div>
+            <div class="det-cuota-info">
+                <strong>Cuota ${i}</strong>
+                <span>${fechaAux.toLocaleDateString('es-AR')}</span>
+            </div>
+            <strong class="det-cuota-monto">$${prestamo.valor_cuota.toLocaleString('es-AR')}</strong>
+            <span class="badge-cuota ${isPagada ? 'pagada' : 'pendiente'}">${isPagada ? 'PAGADA' : 'PENDIENTE'}</span>
+        `;
+        listaCuotasDetalle.appendChild(div);
+
+        if (prestamo.frecuencia_pago === "mes") fechaAux.setMonth(fechaAux.getMonth() + intervalo);
+        else if (prestamo.frecuencia_pago === "semana") fechaAux.setDate(fechaAux.getDate() + (7 * intervalo));
+        else fechaAux.setDate(fechaAux.getDate() + intervalo);
+    }
+
+    modalDetallePrestamo.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+}
+// Eventos para cerrar este modal
+document.getElementById("close-detalle").onclick = () => {
+    modalDetallePrestamo.classList.add("hidden");
+    document.body.style.overflow = "auto";
+};
+
+document.getElementById("btn-cerrar-detalle").onclick = () => {
+    modalDetallePrestamo.classList.add("hidden");
+    document.body.style.overflow = "auto";
+};
+
+
+

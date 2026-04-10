@@ -1239,10 +1239,12 @@ background-color: rgba(255,255,255,0.1);}
 
     }
 
-    .topbar h1 {
-        font-size: 22px;
-        color: #fff;
-    }
+      .main-content .topbar h1 {
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    letter-spacing: 0.2px;
+  }
 
     .menu-toggle {
         display: flex !important;
