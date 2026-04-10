@@ -3287,7 +3287,7 @@ padding: 0;
 .det-cuotas-lista {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 2px;
   max-height: 320px;
   overflow-y: auto;
   padding-right: 4px;
@@ -3303,7 +3303,7 @@ padding: 0;
   background: rgba(0,0,0,0.18);
   border: 1px solid rgba(255,255,255,0.05);
   border-radius: 10px;
-  padding: 12px 14px;
+  padding: 2px 14px;
   transition: background 0.15s;
 }
 
