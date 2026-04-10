@@ -716,3 +716,16 @@ document.getElementById("btn-cerrar-detalle")?.addEventListener("click", () => {
     document.body.style.overflow = "auto";
 });
 
+
+
+
+
+
+
+
+
+
+
+OneSignalDeferred.push(function(OneSignal) {
+  OneSignal.showSlidedownPrompt();
+});
