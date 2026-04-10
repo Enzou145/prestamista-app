@@ -722,10 +722,3 @@ document.getElementById("btn-cerrar-detalle")?.addEventListener("click", () => {
 
 
 
-
-
-
-
-OneSignalDeferred.push(function(OneSignal) {
-  OneSignal.showSlidedownPrompt();
-});
