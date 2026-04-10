@@ -3093,7 +3093,7 @@ padding: 0;
    ============================ */
 
 .modal-content-detalle {
-  width: 94%;
+  width: 100%;
   max-width: 480px;
   max-height: 92vh;
   background: linear-gradient(160deg, #0f172a 0%, #131d33 100%);
@@ -3123,11 +3123,11 @@ padding: 0;
 }
 
 .det-titulo {
-  font-size: 1.5rem;
   font-weight: 800;
   color: #ffffff;
   margin: 0 0 6px 0;
   letter-spacing: -0.2px;
+  font-size: 18px;
 }
 
 .det-cliente-inline {
@@ -3141,12 +3141,14 @@ padding: 0;
   font-size: 1rem;
   font-weight: 700;
   color: #4da6ff;
+  font-size: 15px;
+
 }
 
 .badge-estado {
-  font-size: 0.58rem;
+  font-size: 0.5Rem;
   font-weight: 800;
-  padding: 3px 10px;
+  padding: 2px 2px;
   border-radius: 5px;
   letter-spacing: 0.8px;
   text-transform: uppercase;
@@ -3174,9 +3176,9 @@ padding: 0;
   background: rgba(255,255,255,0.06);
   border: 1px solid rgba(255,255,255,0.1);
   color: #7a96b0;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 26px;
+  height: 26px;
+  border-radius: 1px;
   font-size: 1.4rem;
   cursor: pointer;
   display: flex;
@@ -3218,8 +3220,18 @@ padding: 0;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
+
+.det-grid-2 span{
+  font-size: .5rem;
+}
+
+.det-grid-1 .det-campo span{
+  font-size: .6rem;
+}
+
+
 
 .det-grid-1 {
   display: grid;
@@ -3231,24 +3243,25 @@ padding: 0;
 .det-campo {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
   background: rgba(0,0,0,0.2);
   border: 1px solid rgba(255,255,255,0.06);
   border-left: 3px solid rgba(255,255,255,0.08);
   border-radius: 8px;
-  padding: 10px 12px;
+  padding: 5px 5px;
   min-width: 0;
+  font-weight: 800;
 }
 
 .det-campo span {
-  font-size: 0.72rem;
+  font-size: 0.52rem;
   color: #546e8a;
   font-weight: 500;
   white-space: nowrap;
 }
 
 .det-campo strong {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #e2e8f0;
   font-weight: 700;
   overflow: hidden;
@@ -3275,7 +3288,7 @@ padding: 0;
 }
 
 .det-progreso-texto {
-  font-size: 0.65rem;
+  font-size: 0.5rem;
   font-weight: 800;
   color: #4ade80;
   text-align: right;
@@ -3299,22 +3312,23 @@ padding: 0;
 .det-cuota-item {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0px;
   background: rgba(0,0,0,0.18);
   border: 1px solid rgba(255,255,255,0.05);
   border-radius: 10px;
-  padding: 2px 14px;
+  padding: 1px 12px;
   transition: background 0.15s;
+  border-left: 2px solid #22c55e;
 }
 
 .det-cuota-item:hover { background: rgba(0,0,0,0.28); }
 
-.det-cuota-borde {
+/*.det-cuota-borde {
   width: 3px;
-  height: 36px;
+  height: 20px;
   border-radius: 3px;
   flex-shrink: 0;
-}
+}*/
 
 .det-cuota-borde.pagada   { background: #4ade80; }
 .det-cuota-borde.pendiente { background: #fbbf24; }
@@ -3329,28 +3343,29 @@ padding: 0;
 }
 
 .det-cuota-info strong {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #e2e8f0;
   font-weight: 700;
 }
 
 .det-cuota-info span {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: #546e8a;
   font-weight: 500;
 }
 
 .det-cuota-monto {
-  font-size: 0.92rem;
+  font-size: 0.7rem;
   color: #ffffff;
   font-weight: 800;
   white-space: nowrap;
+  padding: 0 15px;
 }
 
 .badge-cuota {
-  font-size: 0.55rem;
+  font-size: 0.47rem;
   font-weight: 800;
-  padding: 3px 8px;
+  padding: 3px 3px;
   border-radius: 4px;
   letter-spacing: 0.6px;
   text-transform: uppercase;
