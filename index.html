@@ -6,13 +6,17 @@
     <title>Login - Gestión Pro</title>
     <link rel="stylesheet" href="login.css">
 
-        <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+
         <script>
         window.OneSignalDeferred = window.OneSignalDeferred || [];
         OneSignalDeferred.push(async function(OneSignal) {
             await OneSignal.init({
-            appId: "c3bb8e60-531a-4a8e-aa22-f640ddb5dd2c",
+                appId: "c3bb8e60-531a-4a8e-aa22-f640ddb5dd2c",
             });
+
+            // 🔥 ESTA LÍNEA TE FALTABA
+            OneSignal.showSlidedownPrompt();
         });
         </script>
 </head>
